@@ -1,3 +1,9 @@
+(in-package :cl-user)
+(defpackage :tsumugu-asd
+  (:use :asdf))
+
+(in-package :tsumugu-asd)
+
 (defsystem "tsumugu"
   :version "0.1.0"
   :author "i-makinori"

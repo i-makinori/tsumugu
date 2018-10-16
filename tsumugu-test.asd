@@ -1,3 +1,9 @@
+(in-package :cl-user)
+(defpackage :tsumugu-test-asd
+  (:use :asdf))
+(in-package :tsumugu-test-asd)
+
+
 (defsystem "tsumugu-test"
   :defsystem-depends-on ("prove-asdf")
   :author "i-makinori"
