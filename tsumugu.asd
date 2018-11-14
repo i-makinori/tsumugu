@@ -14,20 +14,17 @@
                "envy"
                "cl-ppcre"
                "uiop"
-
                ;; for @route annotation
                "cl-syntax-annot"
-
                ;; HTML Template
                "djula"
-
                ;; for DB
                "datafly"
                "sxql")
   :components ((:module "src"
                 :components
                 ((:file "main" :depends-on ("config" "view" "db"))
-                 (:file "web" :depends-on ("view"))
+                 (:file "web" :depends-on ("model" "view"))
                  (:file "view" :depends-on ("config"))
                  (:file "db" :depends-on ("config"))
                  (:file "config"))))

@@ -3,6 +3,7 @@
   (:use :cl
         :caveman2
         :tsumugu.config
+        :tsumugu.model
         :tsumugu.view
         :tsumugu.db
         :datafly
@@ -25,6 +26,10 @@
 
 (defroute "/" ()
   (render #P"index.html"))
+
+(defroute "/compare/*" (&key splat)
+
+  (format nil "We saw in URL: ~a" splat))
 
 ;;
 ;; Error pages
