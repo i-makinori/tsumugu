@@ -9,7 +9,8 @@
                 :connect-cached)
   (:export :connection-settings
            :db
-           :with-connection))
+           :with-connection
+           :with-transcation))
 (in-package :tsumugu.db)
 
 (defun connection-settings (&optional (db :maindb))
@@ -21,3 +22,16 @@
 (defmacro with-connection (conn &body body)
   `(let ((*connection* ,conn))
      ,@body))
+
+(defmacro with-transaction (conn &body body)
+  `(let ((*connection* ,conn))
+     (with-transcation *connection*
+       ,@body)))
+
+
+;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
+#|
+(defun articles* ()
+  (datafly:retrieve-one
+   (sxql:select :* (sxql:from :articles))))
+|#

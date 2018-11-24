@@ -23,13 +23,18 @@
 
                ;; for DB
                "datafly"
-               "sxql")
+               "sxql"
+
+               ;; password hashing
+               "cl-pass"
+               )
   :components ((:module "src"
                 :components
                 ((:file "main" :depends-on ("config" "view" "db"))
-                 (:file "web" :depends-on ("view"))
+                 (:file "web" :depends-on ("view" "model"))
                  (:file "view" :depends-on ("config"))
                  (:file "db" :depends-on ("config"))
+                 (:file "model" :depends-on ("db"))
                  (:file "config"))))
   :description ""
   :in-order-to ((test-op (test-op "tsumugu-test"))))

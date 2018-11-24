@@ -5,6 +5,7 @@
         :tsumugu.config
         :tsumugu.view
         :tsumugu.db
+        :tsumugu.model
         :datafly
         :sxql)
   (:export :*web*))
@@ -25,6 +26,11 @@
 
 (defroute "/" ()
   (render #P"index.html"))
+
+
+(defroute "/articles" ()
+  (let ((articles (list-articles)))
+    (format nil "articles: ~A" articles)))
 
 ;;
 ;; Error pages
