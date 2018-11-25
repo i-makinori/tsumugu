@@ -1,7 +1,34 @@
 {% extends "layouts/default.html" %}
-{% block title %}Welcome to Caveman2{% endblock %}
+{% block title %} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
 {% block content %}
 <div id="main">
-  Welcome to <a href="http://8arrow.org/caveman/">Caveman2</a>!
+  V(|:S:|) >>> ?: V(■:V(■)) ∧ V(∀V(■).Δ) <br />
+  超時空宇宙生命体探究室 :: hyper-cosmos A-space-life laboratory
 </div>
+<br />
+
+
+<div id="recents">
+  recent updates <br> </br>
+  aaa
+  <ul class="recents-container">
+    {% for art-head in article-heads %}
+    <li>
+      <span class="title"> {{ art-head.title }} </span>
+      <span class="date"> {{ art-head.date }} </span>
+      <br> </br>
+      <span class="author"> {{ art-head.author }} </span>
+      <span class="tags"> {{ art-head.tags }} </span>
+      <p class="contents-head"> {{ art-head.contents-head }} </p>
+    </li>
+    {% endfor %}
+    {% if not article-heads %}
+    <li>articles not found</li>
+    {% endif %}
+  </ul>
+</div>
+
+<br> </br>
+<hr> </hr>
+
 {% endblock %}

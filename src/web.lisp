@@ -25,12 +25,30 @@
 ;; Routing rules
 
 (defroute "/" ()
-  (render #P"index.html"))
+  (let ((article-heads (article-head-list (list-articles))))
+    (render #P"index.html" (list :article-heads article-heads))))
+    ;;(format nil "heads: ~A" article-heads)))
+
+(defun article-head-list (listed-articles)
+  (mapcar
+   #'(lambda (article)
+       (list :title (getf article :title)
+             :date (getf article :updated-at)
+             :author (getf article :user-id)
+             :tags (getf article :tags)
+             :contents-head (getf article :contents)))
+   listed-articles
+   ))
 
 
 (defroute "/articles" ()
   (let ((articles (list-articles)))
     (format nil "articles: ~A" articles)))
+
+
+;; (print (list-articles))
+;; (print (article-head-list (list-articles)))
+
 
 ;;
 ;; Error pages

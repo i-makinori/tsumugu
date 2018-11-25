@@ -5,7 +5,14 @@
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css">
 </head>
+
 <body>
-  {% block content %}{% endblock %}
+  <div id="container">
+    {% include "partials/header.html" %}
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    {% include "partials/footer.html" %}
+  </div>
 </body>
 </html>
