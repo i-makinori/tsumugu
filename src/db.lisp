@@ -50,8 +50,10 @@
     (with-open-file (out-stream file-path
                                 :direction :output
                                 :element-type '(unsigned-byte 8)
-                                :if-does-not-exist :create)
-      (write-sequence contents-vector out-stream))))
+                                :if-does-not-exist :create
+                                :if-exists :supersede)
+      (write-sequence contents-vector out-stream)
+      t)))
 
 (defun read-contents-vector--from--db-directory (filename)
   ;; future : (filename procedure)
@@ -63,11 +65,14 @@
                                  :direction :input
                                  :element-type '(unsigned-byte 8)
                                  :if-does-not-exist nil)
-      (let* ((buf (make-array (file-length read-stream) :element-type '(unsigned-byte 8))))
-        (read-sequence buf read-stream)
-        buf))))
+      (unless read-stream
+        nil)
+      (when read-stream
+        (let* ((buf (make-array (file-length read-stream) :element-type '(unsigned-byte 8))))
+          (read-sequence buf read-stream)
+          buf)))))
 
-;; (print (read-contents-vector--from--db-directory "this_file_will___.txt"))
+(print (read-contents-vector--from--db-directory "this_file_will___.txt"))
 
 
 

@@ -6,13 +6,15 @@
                 :with-connection
                 :with-transcation
                 :write-contents-vector--to--db-directory
-                :read-contents-vector--from--db-directory)
+                :read-contents-vector--from--db-directory
+                )
   (:import-from :datafly
                 :execute
                 :retrieve-all
                 :retrieve-one)
-  (:export :write-file-to-uploader
-           :write-file-from-uploader))
+  (:export :list-articles
+           :write-file-to-uploader
+           :read-file-from-uploader))
 (in-package :tsumugu.model)
 
 
@@ -60,14 +62,19 @@
 (defun write-file-to-uploader (file_name-params file_data-params)
   (let ((db-safe-file-name (unsafe-filename->safe-filename
                             (car file_name-params)))
+        ;; (procedure for-contents-type)
         (db-safe-vector (unsafe-contents-text->safe-contents-text
                          (slot-value (car file_data-params) 'flexi-streams::vector))))
     (write-contents-vector--to--db-directory
      db-safe-file-name db-safe-vector)))
 
+
 (defun read-file-from-uploader (filename)
-  filename
-  )
+  (let ((file-vector (read-contents-vector--from--db-directory filename)))
+    file-vector))
+
+;; (print (read-file-from-uploader "aaa.png"))
+
 
 
 

@@ -48,13 +48,6 @@
 
 
 
-;; uploader such as image-files
-;; [ref]
-;; http://progn.hateblo.jp/entry/20170131/1485855797
-;; https://github.com/edicl/flexi-streams/issues/28
-;; 
-
-
 (defroute "/postfile-form" ()
   (let ((form-html "
 <form action=\"/postfile\" method=\"POST\" enctype=\"multipart/form-data\">
@@ -68,7 +61,57 @@
 (defroute ("/postfile" :method :POST) (&key |file_name| |file_data|)
   (write-file-to-uploader |file_name| |file_data|)
   (format nil "~A ~A ~%" |file_name| |file_data|))
+#|
+(defroute "/getfile/:filename" (&key file-name)
+  (let (())
+    ))
+|#
 
+(defvar -hoge- nil)
+(defvar -fuga- nil)
+
+(defroute "/getfile-sample" ()
+  (let ((file-vector (read-file-from-uploader "alien1.png")))
+    ;; (lambda (env)
+    ;; `(200 (:content-type "text/plain") ,(format nil "~A" file-vector))
+    
+    ;; (format nil "~A" file-vector)
+    (setf (getf (response-headers *response*) :content-type) "image/png")
+    (setf (response-body *response*) file-vector)
+  ))
+
+(print (gethash :user-agent (request-headers -hoge-)))
+(print (getf -hoge- :uri))
+(print *response*)
+
+
+
+
+(print (read-file-from-uploader "aaa.png"))
+
+;; #<FLEXI-STREAMS::VECTOR-INPUT-STREAM {10028B5893}>
+;; (print (coerce (read-file-from-uploader "aaa.png")
+;;               '(vector (unsigned-byte 8))))
+
+#|
+(defgeneric serve-path (app env file encoding)
+  (:method ((this <clack-app-file>) env file encoding)
+    (let ((content-type "image/png")
+          (univ-time (or (file-write-date file)
+                         (get-universal-time))))
+      (when (text-file-p content-type)
+        (setf content-type
+              (format nil "~A;charset=~A"
+                      content-type encoding)))
+      (with-open-file (stream file
+                              :direction :input
+                              :if-does-not-exist nil)
+        `(200
+          (:content-type ,content-type
+                         :content-length ,(file-length stream)
+                         :last-modified "this is time")
+          ,file)))))
+|#
 
 
 
