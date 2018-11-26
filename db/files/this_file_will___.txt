@@ -1,0 +1,3 @@
+this file is work as .gitignore at current.
+but in the nealy future, raw file which wrapps this contents will be abled to uploaded by tsumugu-uploader.
+in the nealy future of nealy future, this directory is removed but stored in to raw-file database instead.

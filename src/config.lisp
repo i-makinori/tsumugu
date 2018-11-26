@@ -8,6 +8,8 @@
            :*application-root*
            :*static-directory*
            :*template-directory*
+           :*datbase-path*
+           :*files-db-directory*
            :appenv
            :developmentp
            :productionp))
@@ -18,7 +20,10 @@
 (defparameter *application-root*   (asdf:system-source-directory :tsumugu))
 (defparameter *static-directory*   (merge-pathnames #P"static/" *application-root*))
 (defparameter *template-directory* (merge-pathnames #P"templates/" *application-root*))
+
 (defparameter *database-path* (merge-pathnames #P"db/tsumugu.db" *application-root*))
+(defparameter *files-db-directory* (merge-pathnames #P"db/files/" *application-root*))
+
 
 (defconfig :common
     `(:databases ((:maindb :sqlite3 :database-name ,*database-path*))))
