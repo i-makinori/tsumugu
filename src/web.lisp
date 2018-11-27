@@ -61,58 +61,35 @@
 (defroute ("/postfile" :method :POST) (&key |file_name| |file_data|)
   (write-file-to-uploader |file_name| |file_data|)
   (format nil "~A ~A ~%" |file_name| |file_data|))
-#|
-(defroute "/getfile/:filename" (&key file-name)
-  (let (())
-    ))
-|#
 
-(defvar -hoge- nil)
-(defvar -fuga- nil)
+
+(defroute "/getfile/:filename" (&key filename)
+  (let* ((file-data (read-file-from-uploader filename)))
+    (unless file-data
+      (throw-code "404"))
+    (when file-data
+      (let ((file-vector (getf file-data :vector))
+            (content-type (getf file-data :type))
+            (length (getf file-data :length)))
+        (setf (getf (response-headers *response*) :content-type) content-type)
+        (setf (getf (response-headers *response*) :content-length) length)
+        (setf (response-body *response*) file-vector)))))
 
 (defroute "/getfile-sample" ()
-  (let ((file-vector (read-file-from-uploader "alien1.png")))
-    ;; (lambda (env)
-    ;; `(200 (:content-type "text/plain") ,(format nil "~A" file-vector))
-    
-    ;; (format nil "~A" file-vector)
-    (setf (getf (response-headers *response*) :content-type) "image/png")
-    (setf (response-body *response*) file-vector)
-  ))
-
-(print (gethash :user-agent (request-headers -hoge-)))
-(print (getf -hoge- :uri))
-(print *response*)
-
-
-
-
-(print (read-file-from-uploader "aaa.png"))
-
-;; #<FLEXI-STREAMS::VECTOR-INPUT-STREAM {10028B5893}>
-;; (print (coerce (read-file-from-uploader "aaa.png")
-;;               '(vector (unsigned-byte 8))))
-
-#|
-(defgeneric serve-path (app env file encoding)
-  (:method ((this <clack-app-file>) env file encoding)
-    (let ((content-type "image/png")
-          (univ-time (or (file-write-date file)
-                         (get-universal-time))))
-      (when (text-file-p content-type)
-        (setf content-type
-              (format nil "~A;charset=~A"
-                      content-type encoding)))
-      (with-open-file (stream file
-                              :direction :input
-                              :if-does-not-exist nil)
-        `(200
-          (:content-type ,content-type
-                         :content-length ,(file-length stream)
-                         :last-modified "this is time")
-          ,file)))))
-|#
-
+  (let ((file-data (read-file-from-uploader "alien1.png")))
+    (unless file-data
+      (throw-code "404"))
+    (when file-data
+      (let ((file-vector (getf file-data :vector))
+            (content-type (getf file-data :type))
+            (length (getf file-data :length)))
+        ;; (lambda (env)
+        ;; `(200 (:content-type "text/plain") ,(format nil "~A" file-vector))
+        ;; (format nil "~A" file-vector)
+        (setf (getf (response-headers *response*) :content-type) content-type)
+        (setf (getf (response-headers *response*) :content-length) length)
+        (setf (response-body *response*) file-vector)
+    ))))
 
 
 

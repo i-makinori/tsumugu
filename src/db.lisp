@@ -68,12 +68,11 @@
       (unless read-stream
         nil)
       (when read-stream
-        (let* ((buf (make-array (file-length read-stream) :element-type '(unsigned-byte 8))))
+        (let* ((buf (make-array (file-length read-stream) :element-type '(unsigned-byte 8)))
+               (file-type (pathname-type file-path))
+               (file-length (file-length read-stream)))
           (read-sequence buf read-stream)
-          buf)))))
-
-(print (read-contents-vector--from--db-directory "this_file_will___.txt"))
-
+          (values buf file-type file-length))))))
 
 
 

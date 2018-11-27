@@ -59,6 +59,8 @@
 
 
 ;; files-db-file
+
+
 (defun write-file-to-uploader (file_name-params file_data-params)
   (let ((db-safe-file-name (unsafe-filename->safe-filename
                             (car file_name-params)))
@@ -69,11 +71,34 @@
      db-safe-file-name db-safe-vector)))
 
 
-(defun read-file-from-uploader (filename)
-  (let ((file-vector (read-contents-vector--from--db-directory filename)))
-    file-vector))
+(let ((content-type<-file-type--list
+       '(("image/png" "png")
+         ("image/jpeg" "jpeg" "jpg")
+         ("image/gif" "gif")
+         ("plain/text" "text" "txt")))
+      (not-in-list "application/octet-stream"))
+  (defun file-type->content-type (file-type)
+    (let ((in-list
+           (reduce #'(lambda (content-type candi)
+                (cond (content-type content-type)
+                      ((find file-type (cdr candi) :test #'string=)
+                       (car candi))
+                      (t content-type)))
+                   content-type<-file-type--list :initial-value nil)))
+      (if in-list in-list not-in-list))))
 
-;; (print (read-file-from-uploader "aaa.png"))
+(print (file-type->content-type "png"))
+
+(defun read-file-from-uploader (filename)
+  (multiple-value-bind (vector type len)
+      (read-contents-vector--from--db-directory filename)
+    (unless vector nil)
+    (when vector
+        (let ((content-type (file-type->content-type type)))
+          (list :vector vector :type content-type :length len
+                )))))
+
+(print (read-file-from-uploader "alien2.png"))
 
 
 
