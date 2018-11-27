@@ -55,4 +55,17 @@ INSERT INTO article(id, user_id, updated_at, title, tags, contents) VALUES
 INSERT INTO article(id, user_id, updated_at, title, tags, contents) VALUES
        (2, 0, "2018-11-26 14:40:00.00-12:12", "respons to 1st article", "tags hell-world", "wellcome to hell, Mr.next-of-nil.");
 
+
+CREATE table blobs(
+       -- (self.id) is also pointerd from (\c1 ::= (1-row-of (article::table))).contents
+       -- if (c1.tags contain "*blob*")
+       --
+       id int NOT NULL,
+       file_name TEXT,
+       bytearray_contents BLOB,
+       --
+       UNIQUE(id));
+
+INSERT INTO blobs(id, file_name, bytearray_contents) VALUES
+       (0, "test_image.png", "");
 ;;
