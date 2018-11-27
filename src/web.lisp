@@ -28,7 +28,9 @@
 (defroute "/" ()
   (let ((article-heads (article-head-list (list-articles))))
     (render #P"index.html" (list :article-heads article-heads))))
-    ;;(format nil "heads: ~A" article-heads)))
+
+
+;;;; articles
 
 (defun article-head-list (listed-articles)
   (mapcar
@@ -47,6 +49,9 @@
     (format nil "articles: ~A" articles)))
 
 
+
+
+;;;; file uploader
 
 (defroute "/postfile-form" ()
   (let ((form-html "
@@ -74,22 +79,6 @@
         (setf (getf (response-headers *response*) :content-type) content-type)
         (setf (getf (response-headers *response*) :content-length) length)
         (setf (response-body *response*) file-vector)))))
-
-(defroute "/getfile-sample" ()
-  (let ((file-data (read-file-from-uploader "alien1.png")))
-    (unless file-data
-      (throw-code "404"))
-    (when file-data
-      (let ((file-vector (getf file-data :vector))
-            (content-type (getf file-data :type))
-            (length (getf file-data :length)))
-        ;; (lambda (env)
-        ;; `(200 (:content-type "text/plain") ,(format nil "~A" file-vector))
-        ;; (format nil "~A" file-vector)
-        (setf (getf (response-headers *response*) :content-type) content-type)
-        (setf (getf (response-headers *response*) :content-length) length)
-        (setf (response-body *response*) file-vector)
-    ))))
 
 
 

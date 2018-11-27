@@ -77,9 +77,3 @@
 
 
 
-;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
-#|
-(defun articles* ()
-  (datafly:retrieve-one
-   (sxql:select :* (sxql:from :articles))))
-|#

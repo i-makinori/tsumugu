@@ -35,7 +35,7 @@
 
 
 
-;; user
+;;;; user
 
 
 (defun add-user (user-name email password)
@@ -46,7 +46,7 @@
                      :password (cl-pass:hash password))))))
 
 
-;; article
+;;;; article
 
 (defparameter *num-show-list-articles* 10)
 (defun list-articles ()
@@ -58,7 +58,16 @@
        ))))
 
 
-;; files-db-file
+;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
+#|
+(defun articles* ()
+  (datafly:retrieve-one
+   (sxql:select :* (sxql:from :articles))))
+|#
+
+
+
+;;;; file uploader
 
 
 (defun write-file-to-uploader (file_name-params file_data-params)
@@ -98,12 +107,10 @@
           (list :vector vector :type content-type :length len
                 )))))
 
-(print (read-file-from-uploader "alien2.png"))
 
 
 
-
-;; injection
+;;;; injection
 (defun unsafe-contents-text->safe-contents-text (unsafe-contents-text)
   unsafe-contents-text)
 
