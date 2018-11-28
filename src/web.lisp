@@ -32,6 +32,15 @@
 
 ;;;; articles
 
+
+(defroute "/articles/:post_code" (&key |post_code|)
+  )
+
+(defroute "/articles/" ()
+  (let ((articles (list-articles)))
+    (format nil "articles: ~A" articles)))
+
+
 (defun article-head-list (listed-articles)
   (mapcar
    #'(lambda (article)
@@ -44,16 +53,43 @@
    ))
 
 
-(defroute "/articles" ()
-  (let ((articles (list-articles)))
-    (format nil "articles: ~A" articles)))
+;; for users
+
+(defroute "/user" ()
+  ;; (or (show updates for/by user) (auth user)
+  (format nil "here are no histories.")
+  )
+
+(defroute "/user/edit-article" ()
+  (format nil "environment have been forgot how to listen articles.")
+  )
 
 
+(defroute "/user/user-config" ()
+  ;; user configuration
+  (format nil "what is user? what is config? what is observer?")
+  )
+
+(defroute "/user/auth" ()
+  ;; login/logout/making/delete user
+  (format nil "dolphins")
+  )
+
+
+;;;; search
+
+(defroute "/resonance" (&key |q|)
+  ;; search
+  (let ((undefined "<pre>
+resonance :: Environment -> Request -> Chaos -> OrFail Response
+resonance env r@(GET:_:_) δc = undefined
+</pre>"))
+    (format nil "-- chaos resonance when quotes = ~A is below<br/> ~A" |q| undefined)))
 
 
 ;;;; file uploader
 
-(defroute "/postfile-form" ()
+(defroute "/postfile/form" ()
   (let ((form-html "
 <form action=\"/postfile\" method=\"POST\" enctype=\"multipart/form-data\">
   <input type=\"text\" name=\"file_name\" value=\"message here\" />
