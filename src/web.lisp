@@ -117,6 +117,12 @@ resonance env r@(GET:_:_) δc = undefined
         (setf (response-body *response*) file-vector)))))
 
 
+;;;; html_test
+
+(defroute "/html_test" ()
+  (print "aaa")
+  (let ((article-heads (article-head-list (list-articles))))
+    (render #P"html_test.html" (list :article-heads article-heads))))
 
 ;;
 ;; Error pages

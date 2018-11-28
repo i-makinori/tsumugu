@@ -7,12 +7,14 @@
 </head>
 
 <body>
-  <div id="container">
-    {% include "partials/header.html" %}
-    <div id="content">
-      {% block content %}{% endblock %}
+  <div id="frame">
+    {% include "partials/menubar.html" %}
+    <div id="window">
+      <div class="buffer">
+        {% block content %}{% endblock %}
+      </div>
     </div>
-    {% include "partials/footer.html" %}
+    {% include "partials/minibuffer.html" %}
   </div>
 </body>
 </html>

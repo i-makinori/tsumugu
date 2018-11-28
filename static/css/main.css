@@ -1,21 +1,97 @@
 @charset "UTF-8";
 
+/* https://github.com/i-makinori/lem/blob/master/lib/core/color-theme.lisp */
+
+
+:root{
+  
+  --forground: #ffffff;
+  --display-background-mode: #000000;
+  --syntax-comment-attribute: #ff7f24;
+  --syntax-keyword-attribute: #00ffff;
+  --syntax-string-attribute: salmon;
+  --syntax-function-name-attribute: lightskyblue;
+  --region: blue;
+  
+  /*
+  // dark
+  --minibuffer-prompt-attribute: cyan;
+  --syntax-constant-attribute: lightsteelblue;
+  --syntax-variable-attribute: #eedd82;
+  --syntax-type-attribute: palegreen;
+
+  // light
+  ((DISPLAY-BACKGROUND-MODE :LIGHT) (MINIBUFFER-PROMPT-ATTRIBUTE :FOREGROUND "blue" :BOLD-P T)
+  (REGION :FOREGROUND NIL :BACKGROUND "#eedc82") (MODELINE :BACKGROUND "#666666" :FOREGROUND "white")
+  (MODELINE-INACTIVE :BACKGROUND "#666666" :FOREGROUND "gray")
+  (SYNTAX-STRING-ATTRIBUTE :FOREGROUND "RosyBrown") (SYNTAX-COMMENT-ATTRIBUTE :FOREGROUND "firebrick")
+  (SYNTAX-KEYWORD-ATTRIBUTE :FOREGROUND "purple") (SYNTAX-CONSTANT-ATTRIBUTE :FOREGROUND "#ff00ff")
+  (SYNTAX-FUNCTION-NAME-ATTRIBUTE :FOREGROUND "blue")
+  (SYNTAX-VARIABLE-ATTRIBUTE :FOREGROUND "darkgoldenrod")
+  (SYNTAX-TYPE-ATTRIBUTE :FOREGROUND "forestgreen"))
+  */
+  --padding-width: 2px 4px 2px 4px;
+}
+
+/* nest */
+
+
+/* blobs */
+* {
+  color: var(--forground);
+}
+
+/* buffer */
 body {
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+  background-color: var(--display-background-mode);
+}
+
+/* region */
+::selection{
+  background-color: var(--region);
+}
+
+/* comments */
+h1,h2,h3,h4,h5,h6{
+  color: var(--syntax-comment-attribute);
+}
+
+h1::before{content: ";;;;";}
+h2::before, h3::before{content: ";;;";}
+h4::before, h5::before{content: ";;";}
+h6::before{content: ";";}
+
+/* defdefine */
+a { 
+  border: 1px;
 }
 
 a:link {
-  color: #005585;
-  text-decoration: none;
+  color: var(--syntax-keyword-attribute);
 }
 a:visited {
-  color: #485270;
+  color: var(--syntax-function-name-attribute);
 }
 a:hover {
-  color: #b83800;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
+  border: 1px solid var(--syntax-string-attribute);
 }
 
 #main {
   text-align: center;
+}
+
+/* cursor */
+
+
+
+/* list-params */
+li{
+  border: 1px solid none;
+}
+
+ul:hover > li:hover{
+  border: 1px solid var(--syntax-string-attribute);
+  /*padding: var(--padding-width);*/
 }
