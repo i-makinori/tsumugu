@@ -2,15 +2,61 @@
 {% block title %} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
 {% block content %}
 <div id="main">
-  V(|:S:|) >>> ?: V(■:V(■)) ∧ V(∀V(■).Δ) <br />
-  超時空宇宙生命体探究室 :: hyper-cosmos A-space-life laboratory
+  V(|:S:|) >>> ?: V(■:V(■)) ∧ V(∀V(■).Δ) -α1/2 δ- <br />
+  超時空宇宙生命体探究室 α-δ版 :: hyper-cosmos A-space-life laboratory . ver alpha-beta
 </div>
-<br />
 
 
-<div id="recents">
-  recent updates <br> </br>
-  aaa
+
+<div id="user_div">
+  <h3> observers </h3>
+  <ul>
+    <li><a href="user"> .map (V(\.\ >>> \)) .../∃/... </a></li>
+    <li><a href="user/edit-article"> ∃(V(V)) >-> ■ </a></li>
+    <li><a href="user/user-config"> ?: ∃ </a></li>
+    <li><a href="user/auth"> ?: ∃ === ∃ </a></li>
+  </ul>
+</div>
+
+<div id="resonance_div">
+  <h3> chaos resonace </h3>
+  <form id="resonance">
+    <a href="#" onclick="apply_resonance()">
+      <input type="text" class="enter" value="" id="resonance_S_formula"/>
+      .resonance
+      <script type="text/javascript">
+        function apply_resonance(){
+        window.location.href = "resonance?q=" + document.getElementById("resonance_S_formula").value;
+        }
+      </script>
+    </a>
+  </form>
+</div>
+
+<div id="uploader_div">
+  <h3> consecrate </h3>
+  <ul>
+    <li>
+      <a href="postfile/form"> ∃ ∈ V(∃)  </a>
+    </li>
+    <li>
+      <a href="#" onclick="is_file_exists()">
+        <input type="text" class="enter" value="" id="is_file_exists_name"/>
+        ?∈getfile
+        <script type="text/javascript">
+          function is_file_exists(){
+          window.location.href = "getfile/" + document.getElementById("is_file_exists_name").value;
+          }
+        </script>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<div id="articles_div">
+  <h3> events </h3>
+  
   <ul class="recents-container">
     {% for art-head in article-heads %}
     <li>
@@ -28,7 +74,5 @@
   </ul>
 </div>
 
-<br> </br>
-<hr> </hr>
 
 {% endblock %}
