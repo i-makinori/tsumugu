@@ -12,10 +12,11 @@
   --syntax-string-attribute: salmon;
   --syntax-function-name-attribute: lightskyblue;
   --region: blue;
+  --mode-line: #666666;
   
   /*
   // dark
-  --minibuffer-prompt-attribute: cyan;
+
   --syntax-constant-attribute: lightsteelblue;
   --syntax-variable-attribute: #eedd82;
   --syntax-type-attribute: palegreen;
@@ -29,8 +30,12 @@
   (SYNTAX-FUNCTION-NAME-ATTRIBUTE :FOREGROUND "blue")
   (SYNTAX-VARIABLE-ATTRIBUTE :FOREGROUND "darkgoldenrod")
   (SYNTAX-TYPE-ATTRIBUTE :FOREGROUND "forestgreen"))
-  */
+ */
+  --font-size: 12px;
+  
+  --mode-line-height: 16px;
   --padding-width: 2px 4px 2px 4px;
+  --buffer-left: 5px solid #333333;
 }
 
 /* nest */
@@ -39,13 +44,26 @@
 /* blobs */
 * {
   color: var(--forground);
+  font-size: var(--font-size);
+  margin: 0; border:0; padding: 0;
 }
+
+
+form input{
+  border: 1px solid var(--syntax-string-attribute);
+  background-color: var(--display-background-mode);
+}
+
 
 /* buffer */
 body {
   font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-  background-color: var(--display-background-mode);
 }
+
+div.buffer > div {
+  margin-bottom: var(--font-size);
+}
+
 
 /* region */
 ::selection{
@@ -92,6 +110,71 @@ li{
 }
 
 ul:hover > li:hover{
-  border: 1px solid var(--syntax-string-attribute);
-  /*padding: var(--padding-width);*/
+  /* border: 1px solid var(--syntax-string-attribute);*/
+}
+
+
+
+/* layout */
+
+html, body{
+  height: 100%;
+  width:100%;
+  margin:0; padding:0; border:0;
+  overflow: hidden;
+  background-color: var(--display-background-mode);
+}
+
+div{
+  margin:0; padding:0; border:0;
+}
+
+div#frame{
+  height:100%;
+  width:100%;
+}
+
+div#menubar{
+  position: fixed;
+  height: var(--mode-line-height);
+  top: 0; left: 0; right: 0;
+  background-color: var(--mode-line);
+}
+
+div#minibuffer{
+  position: fixed;
+  margin: 0;
+  height: var(--mode-line-height);
+  bottom: 0; left: 0; right: 0;
+  background-color: var(--display-background-mode);
+  border-left: var(--buffer-left);
+}
+
+div#window-list{
+  height: 100%;
+  width: 100%;
+  padding-top: var(--mode-line-height);
+  padding-bottom: var(--mode-line-height);
+}
+
+div.window{
+  height: 100%;
+  margin: 0;
+}
+
+div.buffer{
+  border-left: var(--buffer-left);
+  margin-bottom: var(--mode-line-height);
+  /* */
+  height: 100%;
+  overflow-y: auto;
+}
+
+div.modeline{
+  position: fixed;
+  margin:0; padding:0;
+  height: var(--mode-line-height);
+  bottom: var(--mode-line-height);
+  right: 0; left:0;
+  background-color: var(--mode-line);
 }

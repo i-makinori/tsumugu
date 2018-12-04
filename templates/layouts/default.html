@@ -9,9 +9,12 @@
 <body>
   <div id="frame">
     {% include "partials/menubar.html" %}
-    <div id="window">
-      <div class="buffer">
-        {% block content %}{% endblock %}
+    <div id="window-list">
+      <div class="window">
+        <div class="buffer">
+          {% block content %}{% endblock %}
+        </div>
+        {% include "partials/modeline.html" %}
       </div>
     </div>
     {% include "partials/minibuffer.html" %}

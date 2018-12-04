@@ -40,15 +40,17 @@
       <a href="postfile/form"> ∃ ∈ V(∃)  </a>
     </li>
     <li>
-      <a href="#" onclick="is_file_exists()">
-        <input type="text" class="enter" value="" id="is_file_exists_name"/>
-        ?∈getfile
-        <script type="text/javascript">
-          function is_file_exists(){
-          window.location.href = "getfile/" + document.getElementById("is_file_exists_name").value;
-          }
-        </script>
-      </a>
+      <form id="getfile">
+        <a href="#" onclick="is_file_exists()">  
+          <input type="text" class="enter" value="" id="is_file_exists_name"/>
+          ?∈getfile    
+          <script type="text/javascript">
+            function is_file_exists(){
+            window.location.href = "getfile/" + document.getElementById("is_file_exists_name").value;
+            }
+          </script>
+        </a>
+      </form>
     </li>
   </ul>
 </div>
