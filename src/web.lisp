@@ -117,10 +117,17 @@ resonance env r@(GET:_:_) δc = undefined
         (setf (response-body *response*) file-vector)))))
 
 
+;; samples
+
+(defroute "/life" ()
+  (let ((article-heads (article-head-list (list-articles))))
+    (render #P"life.html" (list :article-heads article-heads))))
+
+;;;; game_of_life
+
 ;;;; html_test
 
 (defroute "/html_test" ()
-  (print "aaa")
   (let ((article-heads (article-head-list (list-articles))))
     (render #P"html_test.html" (list :article-heads article-heads))))
 

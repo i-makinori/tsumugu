@@ -49,7 +49,7 @@
 }
 
 
-form input{
+form input, form button{
   border: 1px solid var(--syntax-string-attribute);
   background-color: var(--display-background-mode);
 }

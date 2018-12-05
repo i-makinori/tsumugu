@@ -1,0 +1,37 @@
+{% extends "layouts/default.html" %}
+{% block title %} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
+{% block content %}
+
+
+<h3> conway-print </h3>
+<div id="conway_print" style="border:1px solid #ff0000; overflow:auto; resize:both;">
+  <table id="conway_table">
+    <tr>
+      <td> starting </td>
+    </tr>
+  </table>
+</div>
+
+
+
+<div id="conway_params"> 
+  <form>
+
+    <h3> times </h3>
+    <ul>
+      <li> <button type="button" onclick="time_next();">  next </button> </li>
+      <li> <button type="button" onclick="time_pass();">  passage </button> </li>
+      <li> <button type="button" onclick="time_stop();">  stop </button> </li>
+    </ul>
+
+    <h3> params </h3>
+    <ul> 
+      <li> height : <input type="number" id="height" value="14"/>  </li>
+      <li> width : <input type="number" id="width" value="28"/> </li>
+      <li> <button type="button" onclick="reset_the_world();">  reset the world </button> </li>
+    </ul>
+  </form>  
+</div>
+<script type="text/javascript" src="/js/life.js"></script>
+
+{% endblock %}
