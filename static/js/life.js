@@ -1,6 +1,6 @@
 /* utils */
 
-function matrix( rows, cols, defaultValue){
+function matrix(rows, cols, defaultValue){
   // https://stackoverflow.com/questions/966225/how-can-i-create-a-two-dimensional-array-in-javascript#answer-18116922
   var arr = [];
   for(var i=0; i < rows; i++){
@@ -29,8 +29,16 @@ function dot_width(){
   return id_dot("width").value;
 }
 
-function getval(cel) {
-  alert(cel.innerHTML);  
+function dot_update_par_ms(){
+  return id_dot("update_par_ms").value;
+}
+
+function write_generation(gene){
+  return id_dot("generation").value=gene;
+}
+
+function write_current_world(current){
+  return id_dot("current_world").value=current;
 }
 
 function update_conway_table(field_array){
@@ -91,37 +99,29 @@ var the_world = {
   height: 0,
   width: 0,
   generation: 0,
-  update_cell: update_cell_conway,
+  update_cell: function(){},
   field: [[]],
+  the_end_of_the_world: function(){return true}
 };
+
+current_world = 0;
 
 
 /* game loop */
 
-function whileSleep(_condition,_interval, _mainFunc){
+function loopSleep(_when_stop, _condition,_interval, _mainFunc){
   // https://qiita.com/akyao/items/a718cc78436df68d7e15
+  var when_stop = _when_stop;
   var condition = _condition;
   var interval = _interval;
   var mainFunc = _mainFunc;
   var i = 0;
-  var loopFunc = function() {
-    i = i+1;
-    mainFunc(i);
-    if (condition.apply(i)) {
-      setTimeout(loopFunc, interval);
-    }
-  }
-  loopFunc();
-}
 
-function loopSleep(_condition,_interval, _mainFunc){
-  // https://qiita.com/akyao/items/a718cc78436df68d7e15
-  var condition = _condition;
-  var interval = _interval;
-  var mainFunc = _mainFunc;
-  var i = 0;
   var loopFunc = function() {
     if(condition(i)){
+      if(when_stop()){
+        return true; 
+      }
       i=i+1;
       mainFunc(i);
     }
@@ -130,46 +130,63 @@ function loopSleep(_condition,_interval, _mainFunc){
   loopFunc();
 }
 
-function repl(world){
-  the_world;
-  loopSleep(
-    function(i){ return time_move() },
-    function(i){ return 100},
+function repl(){
+  reset_the_world();
+  loopSleep(the_world.the_end_of_the_world, time_move, dot_update_par_ms,
     function(i){ 
-      console.log(i);
-      next_world(the_world);
-      update_conway_table(the_world.field);
+      the_world = update_environment(i, the_world, null);
     }
-  );   
+  );
 }
 
 /* update */
 
+function update_environment(i ,world, field){
+  // read env
+  null;
+  // data
+  var _next_world = next_world(world);
+  // write env
+  console.log(i);
+  update_conway_table(world.field);
+  write_generation(world.generation);
+  // to nexts
+  return _next_world;
+}
+
 function next_world(before_world){
-  the_world.field = next_field(before_world);
-  return the_world;
+  var next_world = {
+    height: before_world.height,
+    width: before_world.width,
+    generation: before_world.generation+1,
+    update_cell: before_world.update_cell,
+    field: next_field(before_world),
+    the_end_of_the_world: before_world.the_end_of_the_world
+  };
+  // the_world = next_world;
+  return next_world;
 }
 
 function next_field(before_world){
-  wid = before_world.width;
-  hei = before_world.height;
+  width = before_world.width;
+  height = before_world.height;
   update_func = before_world.update_cell;
 
   befo = before_world.field;
-  next = matrix(hei, wid, dead);
+  next = matrix(height, width, dead);
 
   var y_edgi = function(y){
-    return y>=hei?0:y<0?hei-1:y;
+    return y>=height?0:y<0?height-1:y;
   }
   var x_edgi = function(x){
-    return x>=wid?0:x<0?wid-1:x;
+    return x>=width?0:x<0?width-1:x;
   }
-    
+  
   // _n::negative:-1, _c=current:0, _p:positive:+1
-  for(y=0; y<hei; y++){
+  for(y=0; y<height; y++){
     y_n=y_edgi(y-1); y_c=y_edgi(y); y_p=y_edgi(y+1);
 
-    for(x=0; x<wid; x++){
+    for(x=0; x<width; x++){
       x_n=x_edgi(x-1); x_c=x_edgi(x); x_p=x_edgi(x+1);
 
       next[y][x] = update_func(
@@ -179,14 +196,13 @@ function next_field(before_world){
       )
     }
   }
-
   return next;
 }
 
 
 /* time */
 
-var time_moving=function(){};
+var time_moving = function(){};
 
 function time_next(){
   // ((fai)) => (fai)
@@ -208,18 +224,44 @@ function time_move(){
   return time_moving.apply();
 }
 
+var time_the_end = false;
+
+function time_the_end(){
+  time_the_end = true;
+}
+
+function time_the_start(){
+  time_the_end = false;
+}
 
 /* init */
 
 function reset_the_world(){
+  height = dot_height();
+  width = dot_width();
 
-  the_world.height = dot_height();
-  the_world.width = dot_width();
-  the_world.field = init_field_array(the_world.height, the_world.width);
+  current_world = current_world+1;
+  let num_current_world = current_world;
 
-  update_conway_table(the_world.field);
+  var world = {
+    height: height,
+    width: width,
+    generation: 0,
+    field: init_field_array(height, width),
+    update_cell: update_cell_conway,
+    the_end_of_the_world: function(){
+      //console.log(current_world, num_current_world);
+      return current_world!=num_current_world;
+    }
+  }
+
+  the_world=world;
+
+  write_current_world(current_world)
+
+  update_conway_table(world.field);
   
-  repl(the_world);
+  //repl(world);
 }
 
 

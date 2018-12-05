@@ -19,6 +19,9 @@
 
     <h3> times </h3>
     <ul>
+      <li> current: <input type="text" disabled="disabled" id="current_world" value="null" /> </li>
+      <li> gene: <input type="text" disabled="disabled" id="generation" value="null" /> </li>
+      <li> update / <input type="number" id="update_par_ms" value="100" min="10" />ms </li>
       <li> <button type="button" onclick="time_next();">  next </button> </li>
       <li> <button type="button" onclick="time_pass();">  passage </button> </li>
       <li> <button type="button" onclick="time_stop();">  stop </button> </li>
@@ -26,9 +29,9 @@
 
     <h3> params </h3>
     <ul> 
-      <li> height : <input type="number" id="height" value="14"/>  </li>
-      <li> width : <input type="number" id="width" value="28"/> </li>
-      <li> <button type="button" onclick="reset_the_world();">  reset the world </button> </li>
+      <li> height : <input type="number" id="height" value="14" min="1"/> </li>
+      <li> width : <input type="number" id="width" value="28" min="1" /> </li>
+      <li> <button type="button" onclick="repl();">  repl </button> </li>
     </ul>
   </form>  
 </div>
