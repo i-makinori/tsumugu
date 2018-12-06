@@ -117,24 +117,27 @@ resonance env r@(GET:_:_) δc = undefined
         (setf (response-body *response*) file-vector)))))
 
 
-;; samples
+;;;; game_of_life
 
 (defroute "/life" ()
-  (let ((article-heads (article-head-list (list-articles))))
-    (render #P"life.html" (list :article-heads article-heads))))
+  (render #P"life.html" (list)))
 
-;;;; game_of_life
 
 ;;;; html_test
 
-(defroute "/html_test" ()
-  (let ((article-heads (article-head-list (list-articles))))
-    (render #P"html_test.html" (list :article-heads article-heads))))
+(defroute "/test/response-request/*" ()
+  (let ((text (format nil "~A~%" *request*)))
+    (setf (getf (response-headers *response*) :content-type) "text/plain")
+    (setf (getf (response-headers *response*) :content-length) (length text))
+    (setf (response-body *response*) text)))
+
+(defroute "/test/html" ()
+  (render #P"html_test.html" (list)))
+
 
 ;;
 ;; Error pages
 
 (defmethod on-exception ((app <web>) (code (eql 404)))
-  (declare (ignore app))
-  (merge-pathnames #P"_errors/404.html"
-                   *template-directory*))
+  (render #P"_errors/404.html" 
+          (list :uri (request-uri *request*))))
