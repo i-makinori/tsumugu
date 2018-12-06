@@ -1,17 +1,37 @@
 # tsumugu
 
-栞("shiori" :: bookmark)  to 紡ぐ("tsumugu") something such as memory, history, intents....
+tsumuging history of exists of me.
 
-## todo
+## want todo
 
-- [] structure of route and templete-files and also design of frontend
-- [] authorization
-- [] uploader, editor
+### layer 1
+
+- [] directory to save file
+- [] editor
+- [] user_menu
 - [] date TEXT generator, parser
 - [] tag system
-- [] afforestation tiles of blood
-- [] gather data of twitter, bitbucket, github, self, and so on
 
+### layer 2
+
+- [] authorization <- user_menu
+- [] symbolic link to git clones as HTML response
+auto pull&push to&from bitbucket
+- [] gather data of twitter, bitbucket, github, self, and so on
+- [] search
+- sicp
+
+### layer 3
+
+- $ mode2
+- [] afforestation tiles of blood
+life calender, n^2 cell a day
+- [] resonance list <- search
+
+### layer 4
+
+
+- [] lemweb-js.io
 
 
 ## Usage
