@@ -9,9 +9,9 @@
   --display-background-mode: #000000;
   --syntax-comment-attribute: #ff7f24;
   --syntax-keyword-attribute: #00ffff;
-  --syntax-string-attribute: salmon;
-  --syntax-function-name-attribute: lightskyblue;
-  --region: blue;
+  --syntax-string-attribute: #fa8072;
+  --syntax-function-name-attribute: #87cefa;
+  --region: #0000ff;
   --mode-line: #666666;
   
   /*
@@ -31,14 +31,17 @@
   (SYNTAX-VARIABLE-ATTRIBUTE :FOREGROUND "darkgoldenrod")
   (SYNTAX-TYPE-ATTRIBUTE :FOREGROUND "forestgreen"))
  */
-  --font-size: 12px;
+ --emphasis: #e40c2b;
+ --hover-fill: #0000ff;
   
+
+  --font-size: 12px;
   --mode-line-height: 16px;
   --padding-width: 2px 4px 2px 4px;
+  
   --buffer-left: 5px solid #333333;
-}
 
-/* nest */
+}
 
 
 /* blobs */
@@ -49,9 +52,34 @@
 }
 
 
-form input, form button{
-  border: 1px solid var(--syntax-string-attribute);
+/* forms */
+input, button{
   background-color: var(--display-background-mode);
+  border: 1px solid var(--syntax-string-attribute);
+}
+
+input:focus, button:active{
+  border: 1px solid var(--emphasis);
+}
+
+input:hover ,button:hover {
+  background-color: var(--region);
+}
+
+/* table */
+
+table {
+  border-spacing: 0px;
+}
+
+th, td {
+  padding: 1px;
+  border: 1px solid var(--syntax-string-attribute);
+}
+
+th:hover, td:hover {
+  padding: 1px;
+  border: 1px solid var(--emphasis);
 }
 
 
@@ -106,7 +134,7 @@ a:hover {
 
 /* list-params */
 li{
-  border: 1px solid none;
+  border: 1px solid transparent;
 }
 
 ul:hover > li:hover{
@@ -168,6 +196,11 @@ div.buffer{
   /* */
   height: 100%;
   overflow-y: auto;
+}
+
+div.buffer::after{
+  content: '\A\A\A';
+  white-space: pre;
 }
 
 div.modeline{
