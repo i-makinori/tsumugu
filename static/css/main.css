@@ -211,3 +211,55 @@ div.modeline{
   right: 0; left:0;
   background-color: var(--mode-line);
 }
+
+
+/* menubar */
+
+
+div#menubar ::selection{
+  background-color: var(--syntax-function-name-attribute);
+}
+
+div#menubar ul{
+  display: table-cell;
+  position: absolute;
+}
+
+div#menubar li{
+  min-width: 200px;
+
+  border-left: 1px solid var(--emphasis);
+  border-right: 1px solid var(--emphasis);
+  /*background-color: var(--region);*/
+  background-color: var(--mode-line);
+  list-style: none;
+
+  float:left;
+}
+
+div#menubar li:hover{
+  background-color: var(--region);
+}
+div#menubar li::selection{
+  background-color: var(--emphasis);
+}
+
+div#menubar li > ul {
+  display: none;
+}
+
+div#menubar li:hover > ul{
+  width: 0;
+  height: 100%;
+  margin-left: 30px;
+  display: table-cell;
+}
+
+
+ul#menubar_menus {
+  width: 100%;
+}
+
+div#menubar > ul#menubar_menus > li:hover > ul{
+  margin-left:-1px;
+}
