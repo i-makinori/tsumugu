@@ -21,15 +21,15 @@
 <div id="resonance_div">
   <h3> chaos resonace </h3>
   <form id="resonance">
+    <input type="text" class="enter" value="" id="resonance_S_formula"/>
     <a href="#" onclick="apply_resonance()">
-      <input type="text" class="enter" value="" id="resonance_S_formula"/>
       .resonance
-      <script type="text/javascript">
-        function apply_resonance(){
-        window.location.href = "resonance?q=" + document.getElementById("resonance_S_formula").value;
-        }
-      </script>
     </a>
+    <script type="text/javascript">
+      function apply_resonance(){
+      window.location.href = "resonance?q=" + document.getElementById("resonance_S_formula").value;
+      }
+    </script>
   </form>
 </div>
 
@@ -41,15 +41,15 @@
     </li>
     <li>
       <form id="getfile">
+        <input type="text" class="enter" value="" id="is_file_exists_name"/>
         <a href="#" onclick="is_file_exists()">  
-          <input type="text" class="enter" value="" id="is_file_exists_name"/>
           ?∈getfile    
-          <script type="text/javascript">
-            function is_file_exists(){
-            window.location.href = "getfile/" + document.getElementById("is_file_exists_name").value;
-            }
-          </script>
         </a>
+        <script type="text/javascript">
+          function is_file_exists(){
+          window.location.href = "getfile/" + document.getElementById("is_file_exists_name").value;
+          }
+        </script>
       </form>
     </li>
   </ul>

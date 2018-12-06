@@ -53,6 +53,11 @@
 
 
 /* forms */
+form {
+  border: 1px solid var(--syntax-string-attribute);
+  padding: 2px;
+}
+
 input, button{
   background-color: var(--display-background-mode);
   border: 1px solid var(--syntax-string-attribute);
@@ -113,6 +118,19 @@ a {
   border: 1px;
 }
 
+a:hover::after {
+  content: attr(href);
+  
+  position: relative;
+  top: var(--mode-line-height);
+  left: 0px;
+  padding: 2px;
+
+  color: var(--forground);
+  background-color: var(--mode-line);
+
+}
+
 a:link {
   color: var(--syntax-keyword-attribute);
 }
@@ -120,7 +138,6 @@ a:visited {
   color: var(--syntax-function-name-attribute);
 }
 a:hover {
-  /*text-decoration: underline;*/
   border: 1px solid var(--syntax-string-attribute);
 }
 
