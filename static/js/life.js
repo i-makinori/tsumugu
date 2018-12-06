@@ -146,8 +146,7 @@ function update_environment(i ,world, field){
   null;
   // data
   var _next_world = next_world(world);
-  // write env
-  console.log(i);
+  // write to env
   update_conway_table(world.field);
   write_generation(world.generation);
   // to nexts
