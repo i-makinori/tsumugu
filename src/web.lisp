@@ -61,7 +61,8 @@
   )
 
 (defroute "/user/edit-article" ()
-  (format nil "environment have been forgot how to listen articles.")
+  ;; (format nil "environment have been forgot how to listen articles.")
+  (render #P"editor.html" (list))
   )
 
 
@@ -125,7 +126,7 @@ resonance env r@(GET:_:_) δc = undefined
 
 ;;;; html_test
 
-(defroute "/test/response-request/*" ()
+(defroute "/test/response-request*" ()
   (let ((text (format nil "~A~%" *request*)))
     (setf (getf (response-headers *response*) :content-type) "text/plain")
     (setf (getf (response-headers *response*) :content-length) (length text))

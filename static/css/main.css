@@ -58,16 +58,16 @@ form {
   padding: 2px;
 }
 
-input, button{
+input, textarea, button{
   background-color: var(--display-background-mode);
   border: 1px solid var(--syntax-string-attribute);
 }
 
-input:focus, button:active{
+input:focus, textarea:focus, button:active{
   border: 1px solid var(--emphasis);
 }
 
-input:hover ,button:hover {
+input:hover textarea:hover, button:hover {
   background-color: var(--region);
 }
 
