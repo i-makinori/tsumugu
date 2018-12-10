@@ -20,31 +20,32 @@
 
 ;; structure of DB
 
-(defstruct user)
+(defstruct observer)
 
-(defun user-hash->user-struct (user-hash)
+(defun observer-hash->observer-struct (user-hash)
   "(user-hash::list||hash) -> Maybe (user::struct)"
   user-hash)
 
 
 (defstruct article )
 
+#|
 (defun user-hash->user-struct (user-hash) ;; future name error
   "(article-hash::list||hash) -> Maybe (article::struct)"
   user-hash)
+|#
 
 
+;;;; observer
 
-;;;; user
-
-
-(defun add-user (user-name email password)
+#|
+(defun add-observer (user-name email password)
   (with-connection (db)
     (execute (insert-into :craftsmans
-               (set= :name user-name
+               (set= :name name
                      :email email
                      :password (cl-pass:hash password))))))
-
+|#
 
 ;;;; article
 
