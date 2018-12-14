@@ -106,17 +106,20 @@ resonance env r@(GET:_:_) δc = undefined
 
 
 (defroute "/getfile/:filename" (&key filename)
-  (let* ((file-data (read-file-from-uploader filename)))
-    (unless file-data
-      (throw-code "404"))
-    (when file-data
-      (let ((file-vector (getf file-data :vector))
-            (content-type (getf file-data :type))
-            (length (getf file-data :length)))
-        (setf (getf (response-headers *response*) :content-type) content-type)
-        (setf (getf (response-headers *response*) :content-length) length)
-        (setf (response-body *response*) file-vector)))))
-
+  (let ((redirect-html "<html>
+<head>
+<title>redirect</title>
+<meta http-equiv=\"refresh\" content=\"2; URL=~A\">
+<meta name=\"keywords\" content=\"automatic redirection\">
+</head>
+<body>
+redirecting to <a href=\"~A\">~A</a> ...
+</body>
+</html>"))
+    (format nil redirect-html 
+            (format nil "/material/~A" filename)
+            (format nil "/material/~A" filename)
+            (format nil "/material/~A" filename))))
 
 ;;;; game_of_life
 

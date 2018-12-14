@@ -55,6 +55,9 @@
       (write-sequence contents-vector out-stream)
       t)))
 
+#| 
+
+;; lack.builder macro's list's :stacic key generates route of unix file GETtings.
 (defun read-contents-vector--from--db-directory (filename)
   ;; future : (filename procedure)
   ;; prorecure :: (\stream -> read-procedure)
@@ -74,6 +77,6 @@
           (read-sequence buf read-stream)
           (values buf file-type file-length))))))
 
-
+|#
 
 

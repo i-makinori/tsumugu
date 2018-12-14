@@ -80,33 +80,9 @@
     (write-contents-vector--to--db-directory
      db-safe-file-name db-safe-vector)))
 
-
-(let ((content-type<-file-type--list
-       '(("image/png" "png")
-         ("image/jpeg" "jpeg" "jpg")
-         ("image/gif" "gif")
-         ("plain/text" "text" "txt")))
-      (not-in-list "application/octet-stream"))
-  (defun file-type->content-type (file-type)
-    (let ((in-list
-           (reduce #'(lambda (content-type candi)
-                (cond (content-type content-type)
-                      ((find file-type (cdr candi) :test #'string=)
-                       (car candi))
-                      (t content-type)))
-                   content-type<-file-type--list :initial-value nil)))
-      (if in-list in-list not-in-list))))
-
-(print (file-type->content-type "png"))
-
 (defun read-file-from-uploader (filename)
-  (multiple-value-bind (vector type len)
-      (read-contents-vector--from--db-directory filename)
-    (unless vector nil)
-    (when vector
-        (let ((content-type (file-type->content-type type)))
-          (list :vector vector :type content-type :length len
-                )))))
+  "<on app.lisp (route ...... (ppcre:scan ... ) ...... ) >"
+  nil)
 
 
 

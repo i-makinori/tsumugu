@@ -12,8 +12,10 @@
   (:import-from :tsumugu.config
                 :config
                 :productionp
-                :*static-directory*))
+                :*static-directory*
+                :*files-db-directory*))
 (in-package :tsumugu.app)
+
 
 (builder
  (:static
@@ -22,6 +24,12 @@
               path
               nil))
   :root *static-directory*)
+ (:static
+  :path (lambda (path)
+          (if (ppcre:scan "^(?:/material/)" path)
+              (format nil "/~A" (file-namestring path))
+              nil))
+  :root *files-db-directory*)
  (if (productionp)
      nil
      :accesslog)
@@ -37,3 +45,4 @@
          (let ((datafly:*trace-sql* t))
            (funcall app env)))))
  *web*)
+
