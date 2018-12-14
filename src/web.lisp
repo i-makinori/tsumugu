@@ -60,10 +60,16 @@
   (format nil "here are no histories.")
   )
 
+(defroute "/user/auth" ()
+  ;; login/logout/making/delete user
+  (format nil "dolphins")
+  )
+
 (defroute "/user/edit-article" ()
   ;; (format nil "environment have been forgot how to listen articles.")
   (render #P"editor.html" (list))
   )
+
 
 
 (defroute "/user/user-config" ()
@@ -71,10 +77,17 @@
   (format nil "what is user? what is config? what is observer?")
   )
 
-(defroute "/user/auth" ()
-  ;; login/logout/making/delete user
-  (format nil "dolphins")
-  )
+
+;; user/upmaterial
+
+(defroute ("/user/upmaterial" :method :GET) ()
+  (render #P"upmaterial_form.html" (list)))
+
+(defroute ("/user/upmaterial" :method :POST) (&key |file_name| |file_data|)
+  (write-file-to-uploader |file_name| |file_data|)
+  (let ((material-path (format nil "/material/~A" (car |file_name|))))
+    (render #P"upmaterial_success.html" (list :material-path material-path))))
+
 
 
 ;;;; search
@@ -87,39 +100,6 @@ resonance env r@(GET:_:_) δc = undefined
 </pre>"))
     (format nil "-- chaos resonance when quotes = ~A is below<br/> ~A" |q| undefined)))
 
-
-;;;; file uploader
-
-(defroute "/postfile/form" ()
-  (let ((form-html "
-<form action=\"/postfile\" method=\"POST\" enctype=\"multipart/form-data\">
-  <input type=\"text\" name=\"file_name\" value=\"message here\" />
-  <input type=\"file\" name=\"file_data\" />
-  <input type=\"submit\" value=\"Send\" />
-</form>"))
-    (format nil "~A" form-html)))
-
-
-(defroute ("/postfile" :method :POST) (&key |file_name| |file_data|)
-  (write-file-to-uploader |file_name| |file_data|)
-  (format nil "~A ~A ~%" |file_name| |file_data|))
-
-
-(defroute "/getfile/:filename" (&key filename)
-  (let ((redirect-html "<html>
-<head>
-<title>redirect</title>
-<meta http-equiv=\"refresh\" content=\"2; URL=~A\">
-<meta name=\"keywords\" content=\"automatic redirection\">
-</head>
-<body>
-redirecting to <a href=\"~A\">~A</a> ...
-</body>
-</html>"))
-    (format nil redirect-html 
-            (format nil "/material/~A" filename)
-            (format nil "/material/~A" filename)
-            (format nil "/material/~A" filename))))
 
 ;;;; game_of_life
 
