@@ -96,12 +96,14 @@
 
 
 (defun write-file-to-uploader (file_name file_data-params)
-  (let ((db-safe-file-name (unsafe-filename->safe-filename
-                            file_name))
-        (db-safe-vector (unsafe-contents-text->safe-contents-text
-                         (slot-value (car file_data-params) 'flexi-streams::vector))))
-    (write-contents-vector--to--db-directory
-     db-safe-file-name db-safe-vector)))
+  (handler-case 
+      (write-contents-vector--to--db-directory
+       (unsafe-filename->safe-filename file_name)
+       (unsafe-contents-text->safe-contents-text
+        (slot-value (car file_data-params) 'flexi-streams::vector)))
+    (t (c)
+      (format t "error when wrote to db: ~A~%" c)
+      nil)))
 
 (defun read-file-from-uploader (file_name)
   file_name

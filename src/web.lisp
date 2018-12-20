@@ -91,9 +91,11 @@
       (:unsafe-file_name (format nil "unsafe file_name : ~A~%" file-name))
       (:aleady-exists (format nil "aleady exists in material uploader : ~A~%" file-name))
       (t 
-       (write-file-to-uploader file-name file-data)
-       (let ((material-path (format nil "/material/~A" file-name)))
-         (render #P"upmaterial_success.html" (list :material-path material-path)))))))
+       (if (write-file-to-uploader file-name file-data)
+           (let ((material-path (format nil "/material/~A" file-name)))
+             (render #P"upmaterial_success.html" (list :material-path material-path)))
+           (format nil "failed to write file")
+           )))))
   
 
 ;;;; search
