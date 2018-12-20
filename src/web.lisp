@@ -83,12 +83,18 @@
 (defroute ("/user/upmaterial" :method :GET) ()
   (render #P"upmaterial_form.html" (list)))
 
+
 (defroute ("/user/upmaterial" :method :POST) (&key |file_name| |file_data|)
-  (write-file-to-uploader |file_name| |file_data|)
-  (let ((material-path (format nil "/material/~A" (car |file_name|))))
-    (render #P"upmaterial_success.html" (list :material-path material-path))))
-
-
+  (let ((file-name (car |file_name|))
+        (file-data |file_data|))
+    (case (file_name-condition file-name)
+      (:unsafe-file_name (format nil "unsafe file_name : ~A~%" file-name))
+      (:aleady-exists (format nil "aleady exists in material uploader : ~A~%" file-name))
+      (t 
+       (write-file-to-uploader file-name file-data)
+       (let ((material-path (format nil "/material/~A" file-name)))
+         (render #P"upmaterial_success.html" (list :material-path material-path)))))))
+  
 
 ;;;; search
 

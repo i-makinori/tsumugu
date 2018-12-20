@@ -17,7 +17,8 @@
            :*files-db-directory*
            ;;
            :write-contents-vector--to--db-directory
-           :read-contents-vector--from--db-directory))
+           :read-contents-vector--from--db-directory
+           :db-contents))
 
 (in-package :tsumugu.db)
 
@@ -54,6 +55,10 @@
                                 :if-exists :supersede)
       (write-sequence contents-vector out-stream)
       t)))
+
+(defun db-contents ()
+  (mapcar #'file-namestring
+          (uiop:directory-files *files-db-directory*)))
 
 #| 
 

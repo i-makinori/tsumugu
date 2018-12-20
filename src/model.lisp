@@ -7,6 +7,7 @@
                 :with-transcation
                 :write-contents-vector--to--db-directory
                 :read-contents-vector--from--db-directory
+                :db-contents
                 )
   (:import-from :datafly
                 :execute
@@ -14,7 +15,8 @@
                 :retrieve-one)
   (:export :list-articles
            :write-file-to-uploader
-           :read-file-from-uploader))
+           :read-file-from-uploader
+           :file_name-condition))
 (in-package :tsumugu.model)
 
 
@@ -34,6 +36,7 @@
   "(article-hash::list||hash) -> Maybe (article::struct)"
   user-hash)
 |#
+
 
 
 ;;;; observer
@@ -66,24 +69,44 @@
    (sxql:select :* (sxql:from :articles))))
 |#
 
-
+(defun safe-id-name-p (id-name)
+  ;; _-0-9a-zA-Z
+  (let ((id-name-chars (concatenate 'list id-name))
+        (able-chars (concatenate 'list "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")))
+    (every #'(lambda (char) (find char able-chars)) 
+           id-name-chars)))
 
 ;;;; file uploader
 
 
-(defun write-file-to-uploader (file_name-params file_data-params)
+(defun safe-file_name-p (file_name)
+  ;; _-.0-9a-zA-Z
+  (let ((id-name-chars (concatenate 'list file_name))
+        (able-chars (concatenate 'list "_-.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")))
+    (every #'(lambda (char) (find char able-chars)) 
+           id-name-chars)))
+
+(defun file_name-find-in-db (file_name)
+  (find file_name (db-contents) :test #'string=))
+
+(defun file_name-condition (file_name)
+  (cond ((not (safe-file_name-p file_name)) :unsafe-file_name)
+        ((file_name-find-in-db file_name) :aleady-exists)
+        (t t)))
+
+
+(defun write-file-to-uploader (file_name file_data-params)
   (let ((db-safe-file-name (unsafe-filename->safe-filename
-                            (car file_name-params)))
-        ;; (procedure for-contents-type)
+                            file_name))
         (db-safe-vector (unsafe-contents-text->safe-contents-text
                          (slot-value (car file_data-params) 'flexi-streams::vector))))
     (write-contents-vector--to--db-directory
      db-safe-file-name db-safe-vector)))
 
-(defun read-file-from-uploader (filename)
+(defun read-file-from-uploader (file_name)
+  file_name
   "<on app.lisp (route ...... (ppcre:scan ... ) ...... ) >"
   nil)
-
 
 
 
