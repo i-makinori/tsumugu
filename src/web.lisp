@@ -29,7 +29,6 @@
   (let ((article-heads (article-head-list (list-articles))))
     (render #P"index.html" (list :article-heads article-heads))))
 
-
 ;;;; articles
 
 
@@ -88,15 +87,16 @@
   (let ((file-name (car |file_name|))
         (file-data |file_data|))
     (case (file_name-condition file-name)
-      (:unsafe-file_name (format nil "unsafe file_name : ~A~%" file-name))
-      (:aleady-exists (format nil "aleady exists in material uploader : ~A~%" file-name))
+      (:unsafe-file_name (render-blob-page "unsafe-file_name"
+                                           (format nil "unsafe file_name : ~A~%" file-name)))
+      (:aleady-exists (render-blob-page "aleady-exists"
+                                        (format nil "already exists : ~A~%" file-name)))
       (t 
        (if (write-file-to-uploader file-name file-data)
            (let ((material-path (format nil "/material/~A" file-name)))
              (render #P"upmaterial_success.html" (list :material-path material-path)))
-           (format nil "failed to write file")
-           )))))
-  
+           (format nil "failed to write file"))))))
+
 
 ;;;; search
 

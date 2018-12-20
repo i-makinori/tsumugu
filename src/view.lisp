@@ -14,7 +14,8 @@
   (:import-from :datafly
                 :encode-json)
   (:export :render
-           :render-json))
+           :render-json
+           :render-blob-page))
 (in-package :tsumugu.view)
 
 (djula:add-template-directory *template-directory*)
@@ -34,6 +35,13 @@
   (setf (getf (response-headers *response*) :content-type) "application/json")
   (encode-json object))
 
+;;
+;; blobs
+(defun render-blob-page (title contents)
+  (render #P"blob_template.html"
+          (list :page-title (format nil "~A " title)
+                :page-contents (format nil "~A" contents))))
+
 
 ;;
 ;; Execute package definition
@@ -49,3 +57,4 @@
                 :url-for))
 
 (setf djula:*djula-execute-package* (find-package :tsumugu.djula))
+
