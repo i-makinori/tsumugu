@@ -29,10 +29,11 @@
   (let ((article-heads (article-head-list (list-articles))))
     (render #P"index.html" (list :article-heads article-heads))))
 
+
 ;;;; articles
 
-
-(defroute "/articles/:post_code" (&key |post_code|)
+(defroute "/articles/:cosmic-link" (&key |cosmic-link|)
+  
   )
 
 (defroute "/articles/" ()
@@ -48,30 +49,30 @@
              :author (getf article :user-id)
              :tags (getf article :tags)
              :contents-head (getf article :contents)))
-   listed-articles
-   ))
+   listed-articles))
 
 
 ;; for users
 
-(defroute "/user" ()
+(defroute "/observer" ()
   ;; (or (show updates for/by user) (auth user)
-  (format nil "here are no histories.")
-  )
+  ;; (format nil "here are no histories.")
+  (render #P"user.html" (list :user-session "")
+  ))
 
-(defroute "/user/auth" ()
+(defroute "/observer/auth" ()
   ;; login/logout/making/delete user
   (format nil "dolphins")
   )
 
-(defroute "/user/edit-article" ()
+(defroute "/observer/edit-article" ()
   ;; (format nil "environment have been forgot how to listen articles.")
   (render #P"editor.html" (list))
   )
 
 
 
-(defroute "/user/user-config" ()
+(defroute "/observer/observer-config" ()
   ;; user configuration
   (format nil "what is user? what is config? what is observer?")
   )
@@ -79,11 +80,11 @@
 
 ;; user/upmaterial
 
-(defroute ("/user/upmaterial" :method :GET) ()
+(defroute ("/observer/upmaterial" :method :GET) ()
   (render #P"upmaterial_form.html" (list)))
 
 
-(defroute ("/user/upmaterial" :method :POST) (&key |file_name| |file_data|)
+(defroute ("/observer/upmaterial" :method :POST) (&key |file_name| |file_data|)
   (let ((file-name (car |file_name|))
         (file-data |file_data|))
     (case (file_name-condition file-name)

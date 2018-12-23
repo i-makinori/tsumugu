@@ -61,6 +61,19 @@
        (limit *num-show-list-articles*)
        ))))
 
+(print (list-articles))
+
+
+(defun the-article (cosmic_link)
+  
+  )
+
+(print 
+ (with-connection (db)
+   (retrieve-all
+    (select :*
+      (from :observer)))))
+ 
 
 ;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
 #|
