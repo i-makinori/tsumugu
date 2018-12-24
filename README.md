@@ -6,7 +6,7 @@ tsumuging history of exists of me.
 
 ### layer 1
 
-- [] directory to save file
+- [] show article
 - [] editor
 - [] user_menu
 - [] date TEXT generator, parser
@@ -14,12 +14,17 @@ tsumuging history of exists of me.
 
 ### layer 2
 
-- [] authorization <- user_menu
-- [] symbolic link to git clones as HTML response
+- [] dont use HTML but S-formula
+- [] dont use SQL as Database but S-formula unix files
+- [] move to gitlab
+- [] unix files as Database in sepaleted repositories
 auto pull&push to&from bitbucket
-- [] gather data of twitter, bitbucket, github, self, and so on
-- [] search
+- [] self-host gitlab
+- [] self-hosted git/gitlab server as database.
+- [] gather log of twitter, bitbucket, github, self, and so on
+- [] string-resonance-system
 - sicp
+- email@mydomain.com
 
 ### layer 3
 
