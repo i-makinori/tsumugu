@@ -1,3 +1,7 @@
 <div class="modeline">
-    this is modeline
+  {% if observer == None %}
+  ∃∧∃(V(∃)) => ∃∧¬∃
+  {% else  %}
+  ∃∧∃(V(∃)∧Δ∃) => {{ observer.name }}
+  {% endif %}
 </div>

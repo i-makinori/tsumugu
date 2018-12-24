@@ -23,17 +23,31 @@
 (clear-routing-rules *web*)
 
 ;;
+;; render-stateed-page
+
+(defun render-state (template-path &optional env)
+  (let ((observer (num_enum-to-observer-proclaimed (gethash :observer-num_enuem *session*))))
+    (render template-path `(:observer ,observer ,@env))))
+
+
+(defun render-blob-page (title contents)
+  (render-state
+   #P"blob_template.html"
+   (list :page-title (format nil "~A " title)
+         :page-contents (format nil "~A" contents))))
+
+
+;;
 ;; Routing rules
 
 (defroute "/" ()
   (let ((article-heads (article-head-list (list-articles))))
-    (render #P"index.html" (list :article-heads article-heads))))
+    (render-state #P"index.html" (list :article-heads article-heads))))
 
 
 ;;;; articles
 
 (defroute "/articles/:cosmic-link" (&key |cosmic-link|)
-  
   )
 
 (defroute "/articles/" ()
@@ -51,23 +65,46 @@
              :contents-head (getf article :contents)))
    listed-articles))
 
-
 ;; for users
 
 (defroute "/observer" ()
   ;; (or (show updates for/by user) (auth user)
-  ;; (format nil "here are no histories.")
-  (render #P"user.html" (list :user-session "")
+  (render-state #P"user.html" (list :user-session "")
   ))
 
-(defroute "/observer/auth" ()
+
+(defroute ("/observer/auth" :method :GET) ()
   ;; login/logout/making/delete user
-  (format nil "dolphins")
+  (render-state #P"auth_form.html")
   )
+
+(defroute ("/observer/auth" :method :POST) (&key |observer_cosmic| |observer_password|)
+  (let ((maybe-cosmic (car |observer_cosmic|))
+        (maybe-password (car |observer_password|)))
+    (format nil "~A, ~A => ~A"
+            maybe-cosmic maybe-password 
+            (if-trury-the-observer--then--let-to-hash-session-num_enuem
+             *session* maybe-cosmic maybe-password))))
+            ;; (is-trury-the-observer maybe-cosmic maybe-password))))
+
+(defroute ("/observer/auth" :method :POST) (&key |observer_cosmic| |observer_password|)
+  (let ((maybe-observer
+          (is-trury-the-observer (car |observer_cosmic|) (car |observer_password|))))
+    (cond (maybe-observer
+           ;; (let-loged-in-cookie *session* (getf maybe-observer :num_enuem))
+           (setf (gethash :observer-num_enuem *session*) (getf maybe-observer :num-enuem))
+           (render-blob-page "∃∧∃⇒∃"
+                             (format nil "observer had uniquely matched : ~A"
+                                     (getf maybe-observer :name))))
+          (t
+           (render-blob-page "∃∧∃⇒!∃" (format nil "let re-auth"))
+        ))))
+
+
 
 (defroute "/observer/edit-article" ()
   ;; (format nil "environment have been forgot how to listen articles.")
-  (render #P"editor.html" (list))
+  (render-state #P"editor.html" (list))
   )
 
 
@@ -81,7 +118,7 @@
 ;; user/upmaterial
 
 (defroute ("/observer/upmaterial" :method :GET) ()
-  (render #P"upmaterial_form.html" (list)))
+  (render-state #P"upmaterial_form.html" (list)))
 
 
 (defroute ("/observer/upmaterial" :method :POST) (&key |file_name| |file_data|)
@@ -95,7 +132,7 @@
       (t 
        (if (write-file-to-uploader file-name file-data)
            (let ((material-path (format nil "/material/~A" file-name)))
-             (render #P"upmaterial_success.html" (list :material-path material-path)))
+             (render-state #P"upmaterial_success.html" (list :material-path material-path)))
            (format nil "failed to write file"))))))
 
 
@@ -113,7 +150,7 @@ resonance env r@(GET:_:_) δc = undefined
 ;;;; game_of_life
 
 (defroute "/life" ()
-  (render #P"life.html" (list)))
+  (render-state #P"life.html" (list)))
 
 
 ;;;; html_test
@@ -125,12 +162,12 @@ resonance env r@(GET:_:_) δc = undefined
     (setf (response-body *response*) text)))
 
 (defroute "/test/html" ()
-  (render #P"html_test.html" (list)))
+  (render-state #P"html_test.html" (list)))
 
 
 ;;
 ;; Error pages
 
 (defmethod on-exception ((app <web>) (code (eql 404)))
-  (render #P"_errors/404.html" 
+  (render-state #P"_errors/404.html" 
           (list :uri (request-uri *request*))))

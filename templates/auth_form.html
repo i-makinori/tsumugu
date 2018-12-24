@@ -1,0 +1,12 @@
+{% extends "layouts/default.html" %}
+{% block title %} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
+{% block content %}
+
+login : 
+<form action="/observer/auth" method="POST" enctype="multipart/form-data">
+  cosmic_link : <input type="text" name="observer_cosmic" />
+  password : <input type="password" name="observer_password" />
+  <input type="submit" value="Send" />
+</form>
+
+{% endblock %}

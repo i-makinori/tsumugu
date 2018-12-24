@@ -10,6 +10,7 @@
   :license ""
   :depends-on ("clack"
                "lack"
+               "lack-session-store-dbi"
                "caveman2"
                "envy"
                "cl-ppcre"

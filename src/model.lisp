@@ -13,7 +13,11 @@
                 :execute
                 :retrieve-all
                 :retrieve-one)
-  (:export :list-articles
+  (:export :num_enum-to-observer-proclaimed
+           :is-trury-the-observer
+           :let-loged-in-cookie
+           :if-trury-the-observer--then--let-to-hash-session-num_enuem
+           :list-articles
            :write-file-to-uploader
            :read-file-from-uploader
            :file_name-condition))
@@ -21,15 +25,85 @@
 
 
 ;; structure of DB
+#|
+(defstruct observer
+  (num_enuem "")
+  (cosmic_link "") 
+  (name "")
+  (password "") 
+  (email ""))
 
-(defstruct observer)
+(defun is-trury-the-observer (maybe-cosmic-link maybe-password)
+  (with-connection (db)
+    (retrieve-one
+     (select :*
+       (from :observer))))
+  )
 
-(defun observer-hash->observer-struct (user-hash)
-  "(user-hash::list||hash) -> Maybe (user::struct)"
-  user-hash)
+(print
+   (with-connection (db)
+    (retrieve-all
+     (select :*
+       (from :observer)
+       (where (:= :cosmic-link "the-atmos"))
+       ))))
+
+
+(defun cookie-logd-in (session observer-num_enuem)
+  (setf (gethash :observer-num_enuem session) observer-num_enuem)
+  )
+|#
+
+(defstruct observer
+  (num_enuem "")
+  (cosmic_link "") 
+  (name "")
+  (password "") 
+  (email ""))
+
+(defun num_enum-to-observer-proclaimed (num_enuem)
+  (if num_enuem
+      (with-connection (db)
+        (retrieve-one
+         (select (:num_enuem :cosmic_link :name :email)
+           (from :observer)
+           (where (:= :num_enuem num_enuem)))))))
+
+(print (num_enum-to-observer-proclaimed 1))
+(print (num_enum-to-observer-proclaimed nil))
+
+(defun is-trury-the-observer (maybe-cosmic-link maybe-password)
+  (with-connection (db)
+    (retrieve-one
+     (select :*
+       (from :observer)
+       (where (:and
+               (:= :password maybe-password)
+               (:= :cosmic_link maybe-cosmic-link)))))))
+
+;; (print (getf (is-trury-the-observer "neko_neko_chaos" "dolphins") :num-enuem))
+;; (print (is-trury-the-observer "the-atmos" "atoms_password"))
+;; select * from observer where password = "dolphins" and cosmic_link = "neko_neko_chaos";
+
+(defun let-loged-in-cookie (session observer-num_enuem)
+  (setf (gethash :observer-num_enuem session) observer-num_enuem)
+  )
+
+(defun if-trury-the-observer--then--let-to-hash-session-num_enuem
+    (session maybe-cosmic-link maybe-password)
+  (let* ((observer (is-trury-the-observer maybe-cosmic-link maybe-password))
+         (num_enuem (getf observer :num-enuem)))
+    (if num_enuem
+        (values (let-loged-in-cookie session num_enuem) num_enuem))))
+        
+
+
+
 
 
 (defstruct article )
+
+
 
 #|
 (defun user-hash->user-struct (user-hash) ;; future name error
@@ -50,6 +124,8 @@
                      :password (cl-pass:hash password))))))
 |#
 
+
+
 ;;;; article
 
 (defparameter *num-show-list-articles* 10)
@@ -64,9 +140,6 @@
 (print (list-articles))
 
 
-(defun the-article (cosmic_link)
-  
-  )
 
 (print 
  (with-connection (db)
