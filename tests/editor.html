@@ -3,31 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <title>Marked in the browser</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="editor.css"> </link>
 </head>
 <body>
-  <div id="makrkdown-input">
-    <textarea id="markdown-markdown" onchange="parse_markdown()">
+  <div id="markdown-editor">
+    <div id="makrkdown-input">
+      <button id="markdown-parsing-button" onclick="parse_markdown()"> parse </button>
+      
+      <textarea id="markdown-markdown" onchange="parse_markdown()">
 # Marked in browser
-
+        
 Rendered by **marked**.
-    </textarea>
-    <button id="markdown-parsing-button" onclick="parse_markdown()"> parse </button>
-  </div>
-  
-  
+      </textarea>
 
-  <div id="markdown-output">
-    <div id="markdown-preview">
     </div>
-  </div> 
- 
-  <script src="marked.js"></script>
-  <script>
-    function parse_markdown(){
-        document.getElementById('markdown-preview').innerHTML =
-            marked(document.getElementById('markdown-markdown').value);
-    }
-    parse_markdown();
-  </script>
+        
+    <div id="markdown-output">
+      <div id="markdown-preview">
+      </div>
+    </div> 
+    
+    <script src="marked.js"></script>
+    <script>
+      function parse_markdown(){
+      document.getElementById('markdown-preview').innerHTML =
+      marked(document.getElementById('markdown-markdown').value);
+      }
+      parse_markdown();
+    </script>
+  </div>
 </body>
 </html>

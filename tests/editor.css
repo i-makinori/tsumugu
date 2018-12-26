@@ -1,0 +1,26 @@
+
+#markdown-editor {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+#markdown-editor > div {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 50%;
+}
+
+#markdown-input {
+  background: #ff9e2c;
+}
+
+#markdown-output {
+  background: #b6701e;
+}
+
+#markdown-editor textarea {
+  width: 100%;
+  height: 100%;
+}
