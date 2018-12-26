@@ -1,0 +1,28 @@
+{% extends "layouts/default.html" %}
+{% block title %} {{ article-title }} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
+{% block content %}
+
+<div id="article">
+  {{ content }}
+</div>
+
+<div id="article_marked">
+
+</div>
+
+
+
+<script src="/js/marked.js"></script>
+<script>
+  function parse_markdown(){
+  document.getElementById('article_marked').innerHTML =
+  marked(document.getElementById('article').innerHTML);
+  }
+  parse_markdown();
+  document.getElementById('article').style.display = "none";
+</script>
+
+
+
+
+{% endblock %}

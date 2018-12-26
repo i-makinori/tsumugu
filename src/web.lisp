@@ -107,6 +107,17 @@
   (render-state #P"editor.html" (list))
   )
 
+(defvar *text*)
+(print *text*)
+(print (string *text*))
+
+(defroute ("/observer/post-article" :method :POST) (&key |cosmic_link| |title| |tags| |content|)
+  (format nil "~A ~A ~A ~A" |cosmic_link| |title| |tags| |content|)
+  (setq *text* |content|)
+  (format nil "~A" |content|)
+  (render-state #P"article.html" (list :article-title |title| :content |content|))
+  )
+
 
 
 (defroute "/observer/observer-config" ()

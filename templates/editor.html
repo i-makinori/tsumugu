@@ -2,14 +2,70 @@
 {% block title %} -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
 {% block content %}
 
+
+<br />
+<br />
+<!-- error messages here -->
+<br />
+carve article
+
 <div id="editor">
-  <form>
-    title : <input type="text" id="article_title" value=""> <br/>
-    url-predict : <input type="text" id="article_url" disabled="disabled"> <br/>
+  
+  <div id="editor_tabs">
+    <button class="tablinks" onclick="openBuffer(event, 'editor_carve_article')"> carve </button>
+    □□□□
+    <button class="tablinks" onclick="openBuffer(event, 'editor_edit_markdown')"> edit content </button>
+    <button class="tablinks" onclick="openBuffer(event, 'editor_preview_markdown')"> preview content </button>
+    <button class="tablinks" onclick="openBufferAll(event)"> open all buffers </button>
+  </div>
+  
+  <div id="editor_buffers">
     
-    text : 
-    <textarea rows="10" cols="33"> this is article </textarea>
-  </form>
+    <div id="editor_carve_article" class="editor_content">
+      carve to server
+      <form action="post-article" method="post" id="carve_to_server">
+        
+        <li> <!-- user by cookie --> or <a href="auth"> auth observer </a> </li>
+        
+        <ul>
+          <li> cosmic_link : <input type="text" name="cosmic_link"></input> </li>
+          <li> title : <input type="text" name="title"></input> </li>
+          <li> tag : <input type="text" name="tags"></input> </li>
+        </ul>
+        <ol>
+          <li> <a href="upmaterial"> upload material </a> </li>
+          <li> and help is here </li>
+        </ol>
+        <input value="carve to server" type="submit"> </input>
+      </form>
+      
+    </div>
+
+    <div id="editor_edit_markdown" class="editor_content">
+      editting content
+      <textarea id="editor_markdown_markdown" onchange="parse_markdown()" form="carve_to_server" name="content">
+# engrave article in markdown language.
+
+thanks to [marked](https://marked.js.org/),
+[tokinowari.net](https://www.tokinowari.net) sapports markdown.
+      </textarea>
+    </div>
+
+    <div id="editor_preview_markdown" class="editor_content">
+      preview <br />
+      <div id="editor_preview_markdown_preview">
+      </div>
+    </div>
+
+
+  </div>
 </div>
+
+  
+<link rel="stylesheet" type="text/css" media="screen" href="/css/editor.css"> </link>
+<script src="/js/marked.js"></script>
+<script src="/js/editor.js"></script>
+
+  
 
 {% endblock %}
