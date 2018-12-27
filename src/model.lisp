@@ -18,6 +18,7 @@
            :let-loged-in-cookie
            :if-trury-the-observer--then--let-to-hash-session-num_enuem
            :list-articles
+           :cosmic_link-article
            :write-file-to-uploader
            :read-file-from-uploader
            :file_name-condition))
@@ -68,9 +69,6 @@
          (select (:num_enuem :cosmic_link :name :email)
            (from :observer)
            (where (:= :num_enuem num_enuem)))))))
-
-(print (num_enum-to-observer-proclaimed 1))
-(print (num_enum-to-observer-proclaimed nil))
 
 (defun is-trury-the-observer (maybe-cosmic-link maybe-password)
   (with-connection (db)
@@ -137,16 +135,16 @@
        (limit *num-show-list-articles*)
        ))))
 
-(print (list-articles))
+(defun cosmic_link-article (cosmic_link)
+  (with-connection (db)
+    (retrieve-one
+     (select :*
+       (from :article)
+       (where (:= :cosmic_link cosmic_link))
+       ))))
 
 
 
-(print 
- (with-connection (db)
-   (retrieve-all
-    (select :*
-      (from :observer)))))
- 
 
 ;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
 #|

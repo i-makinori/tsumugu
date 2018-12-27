@@ -5,7 +5,7 @@
 
 <br />
 <br />
-<!-- error messages here -->
+{{ carve-state }}
 <br />
 carve article
 
@@ -23,10 +23,16 @@ carve article
     
     <div id="editor_carve_article" class="editor_content">
       carve to server
-      <form action="post-article" method="post" id="carve_to_server">
+      <form action="edit-article" method="post" id="carve_to_server">
         
-        <li> <!-- user by cookie --> or <a href="auth"> auth observer </a> </li>
-        
+        <p>
+          {% if observer == None %}
+          <a href="auth"> V(∃∧∃(V(∃))) </a>
+          {% else  %}
+          or ({{ observer.name }} ∈ ∃∧∃(V(∃)∧Δ∃)) (<a href="auth">V(∃∧∃(V(∃)))</a>)
+          {% endif %}
+        </p>
+          
         <ul>
           <li> cosmic_link : <input type="text" name="cosmic_link"></input> </li>
           <li> title : <input type="text" name="title"></input> </li>

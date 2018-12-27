@@ -3,23 +3,37 @@
 {% block content %}
 
 <div id="article">
-  {{ content }}
-</div>
+  <h1> {{ article.title }} </h1>
+  
+  <br />
+  
+  <div id="article_content">
+    {{ article.contents }}
+  </div>
+  
+  <div id="article_marked">  
+  </div>
 
-<div id="article_marked">
+  <br />
+  <ul>
+    <li> article : <a href="/article/{{article.cosmic-link}}"> {{article.cosmic-link}} </a> </li>
+    <li> carved by : <a href="/observer/{{article.observer.cosmic-link}}"> {{article.observer.name}} </a> </li>
+    <li> carved in : {{article.updated-at}} </li>
+    <li> parsing-types : {{article.tags}} </li>
+  </ul>
 
-</div>
-
-
-
+  <!-- {{ article }} -->
+  
+  </div>
+  
 <script src="/js/marked.js"></script>
 <script>
   function parse_markdown(){
   document.getElementById('article_marked').innerHTML =
-  marked(document.getElementById('article').innerHTML);
+  marked(document.getElementById('article_content').innerHTML);
   }
   parse_markdown();
-  document.getElementById('article').style.display = "none";
+  document.getElementById('article_content').style.display = "none";
 </script>
 
 

@@ -29,6 +29,8 @@
   (let ((observer (num_enum-to-observer-proclaimed (gethash :observer-num_enuem *session*))))
     (render template-path `(:observer ,observer ,@env))))
 
+;;(print (num_enum-to-observer-proclaimed 100))
+
 
 (defun render-blob-page (title contents)
   (render-state
@@ -41,29 +43,41 @@
 ;; Routing rules
 
 (defroute "/" ()
-  (let ((article-heads (article-head-list (list-articles))))
+  (let ((article-heads (list-articles)))
     (render-state #P"index.html" (list :article-heads article-heads))))
 
 
 ;;;; articles
 
-(defroute "/articles/:cosmic-link" (&key |cosmic-link|)
-  )
+(defroute "/article/:cosmic-link" (&key cosmic-link)
+  (format nil "~A" cosmic-link)
 
-(defroute "/articles/" ()
-  (let ((articles (list-articles)))
-    (format nil "articles: ~A" articles)))
+  (let ((article (cosmic_link-article cosmic-link)))
+    (unless article
+      (throw-code 404))
+    (if article
+        (render-state
+         #P"article.html"
+         (list :article `(,@article
+                          :observer ,(num_enum-to-observer-proclaimed (getf article :num-enuem))))
+        )
+    )))
 
 
-(defun article-head-list (listed-articles)
+(defun article+article-observer--list (listed-articles)
   (mapcar
    #'(lambda (article)
-       (list :title (getf article :title)
-             :date (getf article :updated-at)
-             :author (getf article :user-id)
-             :tags (getf article :tags)
-             :contents-head (getf article :contents)))
+       `(,@article
+         :observer ,(num_enum-to-observer-proclaimed (getf article :num-enuem))))
    listed-articles))
+
+(defroute "/article/" ()
+  (let ((article-list (article+article-observer--list (list-articles))))
+    (render-state #P"article_list.html" (list :article-list article-list ))))
+
+
+  
+
 
 ;; for users
 
@@ -79,15 +93,6 @@
   )
 
 (defroute ("/observer/auth" :method :POST) (&key |observer_cosmic| |observer_password|)
-  (let ((maybe-cosmic (car |observer_cosmic|))
-        (maybe-password (car |observer_password|)))
-    (format nil "~A, ~A => ~A"
-            maybe-cosmic maybe-password 
-            (if-trury-the-observer--then--let-to-hash-session-num_enuem
-             *session* maybe-cosmic maybe-password))))
-            ;; (is-trury-the-observer maybe-cosmic maybe-password))))
-
-(defroute ("/observer/auth" :method :POST) (&key |observer_cosmic| |observer_password|)
   (let ((maybe-observer
           (is-trury-the-observer (car |observer_cosmic|) (car |observer_password|))))
     (cond (maybe-observer
@@ -101,21 +106,19 @@
         ))))
 
 
-
-(defroute "/observer/edit-article" ()
+(defroute ("/observer/edit-article" :method :GET) ()
   ;; (format nil "environment have been forgot how to listen articles.")
   (render-state #P"editor.html" (list))
   )
 
-(defvar *text*)
-(print *text*)
-(print (string *text*))
-
-(defroute ("/observer/post-article" :method :POST) (&key |cosmic_link| |title| |tags| |content|)
+(defroute ("/observer/edit-article" :method :POST) (&key |cosmic_link| |title| |tags| |content|)
   (format nil "~A ~A ~A ~A" |cosmic_link| |title| |tags| |content|)
   (setq *text* |content|)
   (format nil "~A" |content|)
-  (render-state #P"article.html" (list :article-title |title| :content |content|))
+  
+  ;; (render-state #P"article.html" (list :article-title |title| :content |content|))
+  (render-state #p"editor.html" (list :carve-state "carve sucessed to "))
+  
   )
 
 

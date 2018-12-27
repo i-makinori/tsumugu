@@ -1,0 +1,28 @@
+{% extends "layouts/default.html" %}
+{% block title %} V(article∧∈[../□/..]) -- V(■:V(■))∧V(∀V(■).Δ) :: ?:{% endblock %}
+{% block content %}
+
+<div id="article-list" style='table-layout:fixed; width:100%;'>
+  articles 
+  <table>
+    <tr>
+      <th> title </th>
+      <th> carved in </th> 
+      <th> carved by </th>
+      <th> parsing-types </th>
+    </tr>
+    {% for article in article-list %}
+    <tr>
+      <td> <a href="{{article.cosmic-link}}"> {{ article.title }} </a> </td>
+      <td> {{ article.updated-at }} </td>
+      <td> <a href="/observer/{{article.observer.cosmic-link}}"> {{ article.observer.name }} </a> </td>
+      <td> {{ article.tags }} </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<!-- {{ article-list }} -->
+
+
+{% endblock %}
