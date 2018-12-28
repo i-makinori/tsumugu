@@ -31,10 +31,13 @@ CREATE table observer(
        --
        UNIQUE(num_enuem, cosmic_link));
 
+
 INSERT INTO observer(num_enuem, cosmic_link, name, password, email) VALUES
-       (0, "neko_neko_chaos" , "chaos shin", "dolphins", "email@*.com");
+       (0, "tokinowari" , "tokinowari.net", "resonance", "");
 INSERT INTO observer(num_enuem, cosmic_link, name, password, email) VALUES
-       (1, "the-atmos", "atmos", "atoms_password", "email@*2.com");
+       (1, "hacker", "someone hacked tokinowari", "dolphins", "");
+INSERT INTO observer(num_enuem, cosmic_link, name, password, email) VALUES
+       (2, "agent" , "someone agent", "proxy", "");
 
 
 CREATE table article(
@@ -52,9 +55,9 @@ CREATE table article(
        UNIQUE(num_enuem, cosmic_link));
 
 INSERT INTO article(num_enuem, observer_id, authorities, updated_at, cosmic_link, title, tags, contents) VALUES
-       (0, 0, "", 0, "this_is_id", "this_is_title", "this_is_tag", "hell o this is first article content");
+       (0, 0, "", 0, "", "", "", "nil");
 INSERT INTO article(num_enuem, observer_id, authorities, updated_at, cosmic_link, title, tags, contents) VALUES
-       (1, 1, "", 1000, "hello-dier", "hello dier", "hell", "this is my first article... wow");
+       (1, 1, "", 1441000144000, "genesis", "the_genesis", "bigbang", "the not hacker spend to written this homepage more than seven universe cycles.");
 
 
 
