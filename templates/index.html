@@ -7,17 +7,12 @@
 </div>
 
 
-
-<div id="observer_div">
-  <h3> observers </h3>
-  <ul>
-    <li><a href="observer"> .map (V(\.\ >>> \)) .../∃/... </a></li>
-    <li><a href="observer/edit-article"> ∃(V(V)) >-> ■ </a></li>
-    <li><a href="observer/observer-config"> ?: ∃ </a></li>
-    <li><a href="observer/auth"> ?: ∃ === ∃ </a></li>
-  </ul>
+<div id="articles_div">
+  <h3> events </h3>
+  <a href="/article/"> article-list </a>
 </div>
 
+<!--
 <div id="resonance_div">
   <h3> chaos resonace </h3>
   <form id="resonance">
@@ -32,49 +27,39 @@
     </script>
   </form>
 </div>
+-->
 
-<div id="uploader_div">
-  <h3> consecrate </h3>
+<div id="observer_div">
+  <h3> observers </h3>
   <ul>
-    <li>
-      <a href="/observer/upmaterial"> ∃ ∈ V(∃)  </a>
-    </li>
-    <li>
-      <form id="material">
-        <input type="text" class="enter" value="" id="is_file_exists_name"/>
-        <a href="#" onclick="is_file_exists()">  
-          ?∈material
-        </a>
-        <script type="text/javascript">
-          function is_file_exists(){
-          window.location.href = "/material/" + document.getElementById("is_file_exists_name").value;
-          }
-        </script>
-      </form>
-    </li>
+    <!--
+      <li><a href="observer"> .map (V(\.\ >>> \)) .../∃/... </a></li>
+      <li><a href="observer/observer-config"> ?: ∃ </a></li>
+    -->
+    <!-- <li> <a href="/observer/upmaterial"> ∃ ∈ V(∃)  </a> </li> -->
+    <li><a href="observer/auth"> ?: ∃ === ∃ </a></li>
+    <li><a href="observer/edit-article"> ∃(V(V)) >-> ■ </a></li>
   </ul>
 </div>
 
-
-<div id="articles_div">
-  <h3> events </h3>
-  
-  <ul class="recents-container">
-    {% for art-head in article-heads %}
-    <li>
-      <span class="title"> {{ art-head.title }} </span>
-      <span class="date"> {{ art-head.date }} </span>
-      <br> </br>
-      <span class="author"> {{ art-head.author }} </span>
-      <span class="tags"> {{ art-head.tags }} </span>
-      <p class="contents-head"> {{ art-head.contents-head }} </p>
-    </li>
-    {% endfor %}
-    {% if not article-heads %}
-    <li>articles not found</li>
-    {% endif %}
-  </ul>
+<!--
+<div id="material_div">
+  <h3> consecrate </h3>
+  <form id="material">
+    <input type="text" class="enter" value="" id="is_file_exists_name"/>
+    <a href="#" onclick="is_file_exists()">  
+      ?∈material
+    </a>
+    <script type="text/javascript">
+      function is_file_exists(){
+      window.location.href = "/material/" + document.getElementById("is_file_exists_name").value;
+      }
+    </script>
+  </form>
 </div>
+-->
+
+
 
 
 {% endblock %}
