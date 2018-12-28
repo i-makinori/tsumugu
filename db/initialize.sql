@@ -43,7 +43,7 @@ CREATE table article(
        --
        observer_id int NOT NULL,
        authorities TEXT, -- 000 to 777 to each observer groupus
-       updated_at TEXT,
+       updated_at int,
        --
        title TEXT,
        tags TEXT,
@@ -52,9 +52,9 @@ CREATE table article(
        UNIQUE(num_enuem, cosmic_link));
 
 INSERT INTO article(num_enuem, observer_id, authorities, updated_at, cosmic_link, title, tags, contents) VALUES
-       (0, 0, "", "bifore big bang", "this_is_id", "this_is_title", "this_is_tag", "hell o this is first article content");
+       (0, 0, "", 0, "this_is_id", "this_is_title", "this_is_tag", "hell o this is first article content");
 INSERT INTO article(num_enuem, observer_id, authorities, updated_at, cosmic_link, title, tags, contents) VALUES
-       (1, 1, "", "2018-11-25 22:22:22.22+09:00", "hello-dier", "hello dier", "hell", "this is my first article... wow");
+       (1, 1, "", 1000, "hello-dier", "hello dier", "hell", "this is my first article... wow");
 
 
 
