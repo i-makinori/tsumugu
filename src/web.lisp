@@ -68,15 +68,13 @@
   (mapcar
    #'(lambda (article)
        `(,@article
-         :observer ,(num_enum-to-observer-proclaimed (getf article :num-enuem))))
+         :observer ,(num_enum-to-observer-proclaimed (getf article :observer-id))))
    listed-articles))
 
 (defroute "/article/" ()
   (let ((article-list (article+article-observer--list (list-articles))))
     (render-state #P"article_list.html" (list :article-list article-list ))))
 
-
-  
 
 
 ;; for users
@@ -112,15 +110,15 @@
   )
 
 (defroute ("/observer/edit-article" :method :POST) (&key |cosmic_link| |title| |tags| |content|)
-  (format nil "~A ~A ~A ~A" |cosmic_link| |title| |tags| |content|)
-  (setq *text* |content|)
-  (format nil "~A" |content|)
-  
-  ;; (render-state #P"article.html" (list :article-title |title| :content |content|))
-  (render-state #p"editor.html" (list :carve-state "carve sucessed to "))
-  
-  )
-
+  (let ((is-observer (gethash :observer-num_enuem *session*)))
+    (multiple-value-bind (is-sucess state error-state)
+        (maybe-add-article-row-to-db is-observer |cosmic_link| |title| |tags| |content|)
+      (cond (error-state (format nil "~A" error-state))
+            ((not is-sucess)
+             (render-state #p"editor.html" (list :carve-state state)))
+            (t
+             (render-blob-page "update sucessed" "sucessed"))
+            ))))
 
 
 (defroute "/observer/observer-config" ()

@@ -19,6 +19,7 @@
            :if-trury-the-observer--then--let-to-hash-session-num_enuem
            :list-articles
            :cosmic_link-article
+           :maybe-add-article-row-to-db
            :write-file-to-uploader
            :read-file-from-uploader
            :file_name-condition))
@@ -159,6 +160,84 @@
         (able-chars (concatenate 'list "_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")))
     (every #'(lambda (char) (find char able-chars)) 
            id-name-chars)))
+
+(defun current-article-num_enuem-of-db ()
+  ;; low abstraction code
+  (let ((num_enuem-list
+          (with-connection (db)
+            (retrieve-all
+             (select :num_enuem
+               (from :article))))))
+    (apply #'max (mapcar #'cadr
+                         (remove-if-not #'(lambda (cell)
+                                            (integerp (cadr cell)))
+                                        num_enuem-list)))))
+
+(defun maybe-add-article-row-to-db (observer-num_enuem cosmic_link title tags content)
+  (cond ((not (num_enum-to-observer-proclaimed observer-num_enuem))
+         (values nil :not-observer))
+        ((not (safe-id-name-p cosmic_link))
+         (values nil :cosmic_link-is-not-safe))
+        ((cosmic_link-article cosmic_link)
+         (values nil :cosmic_link-aleady-exists))
+        (t
+         (let ((next-num_enuem (1+ (current-article-num_enuem-of-db)))
+               (current-time (get-universal-time)))
+           (handler-case
+               (progn 
+                 (with-connection (db)
+                   (execute
+                    (insert-into :article
+                      (set= :num_enuem next-num_enuem
+                            :cosmic_link cosmic_link
+                            :observer_id observer-num_enuem
+                            :authorities ""
+                            :updated_at current-time
+                            :title title
+                            :tags tags
+                            :contents content))))
+                 (values t :sucessed))
+             (t (c)
+               (values nil :server-error c))))
+           )))
+
+
+#|
+(print (num_enum-to-observer-proclaimed 1))
+
+(with-connection (db)
+  (execute
+   (insert-into :article
+     (set= :num_enuem 10
+           :cosmic_link "the_cosmic2"
+           :observer_id 11
+           :authorities ""
+           :updated_at 100
+           :title "title"
+           :tags "tag1 tag2"
+           :contents "# content
+content"))))
+
+(defun hoge (n)
+  (handler-case
+      (print (/ 1 n))
+    (t (c)
+      (values nil :server-error c))))
+
+(print (hoge 10))
+(print (list-articles))
+
+|#
+#|
+(defun universal-time-to-time-text (universal-time)
+  (multiple-value-bind (second minute hour date mouth year)
+      (decode-universal-time universal-time)
+    (format nil "~A/~A/~A ~A:~A:~A" year mouth date hour minute second)
+  ))
+
+(print
+ (universal-time-to-time-text 10000))
+|#
 
 ;;;; file uploader
 
