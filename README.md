@@ -6,37 +6,39 @@ tsumuging history of exists of me.
 
 ### layer 1
 
-- [] show article
-- [] editor
-- [] user_menu
-- [] date TEXT generator, parser
-- [] tag system
+- [X] show article
+- [X] editor
+  - [ ] fix editor
+- [ ] user_menu
+- [X] date TEXT generator
+  - [ ] parser
+- [ ] tag system
 
 ### layer 2
 
-- [] dont use HTML but S-formula
-- [] dont use SQL as Database but S-formula unix files
-- [] move to gitlab
-- [] unix files as Database in sepaleted repositories
-auto pull&push to&from bitbucket
-- [] self-host gitlab
-- [] self-hosted git/gitlab server as database.
-- [] gather log of twitter, bitbucket, github, self, and so on
-- [] string-resonance-system
+- [ ] dont use HTML but S-formula
+- [ ] dont use SQL as Database but S-formula unix files
+- [ ] move to gitlab
+- [ ] unix files as Database in sepaleted repositories
+auto pull&push to&from git-remote
+- [ ] self-host gitlab
+- [ ] self-hosted git/gitlab server as database.
+- [ ] gather log of twitter, bitbucket, github, self, and so on
+- [ ] string-resonance-system
 - sicp
 - email@mydomain.com
 
 ### layer 3
 
 - $ mode2
-- [] afforestation tiles of blood
+- [ ] afforestation tiles of blood
 life calender, n^2 cell a day
-- [] resonance list <- search
+- [ ] resonance list <- search
 
 ### layer 4
 
 
-- [] lemweb-js.io
+- [ ] lemweb-js.io
 
 
 ## Usage
