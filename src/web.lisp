@@ -56,22 +56,33 @@
     (if article
         (render-state
          #P"article.html"
-         (list :article `(,@article
-                          :observer ,(num_enum-to-observer-proclaimed (getf article :num-enuem))))
-        )
-    )))
+         (list :article
+               `(,@article
+                 :observer ,(num_enum-to-observer-proclaimed (getf article :num-enuem))
+                 :updated-at-as-text ,(universal-time-to-time-text (getf article :updated-at))))
+         ))))
 
 
-(defun article+article-observer--list (listed-articles)
+(defun article+article-observer--list--params (listed-articles)
   (mapcar
    #'(lambda (article)
        `(,@article
-         :observer ,(num_enum-to-observer-proclaimed (getf article :observer-id))))
+         :observer ,(num_enum-to-observer-proclaimed (getf article :observer-id))
+         :updated-at-as-text ,(universal-time-to-time-text (getf article :updated-at))))
    listed-articles))
 
 (defroute "/article/" ()
-  (let ((article-list (article+article-observer--list (list-articles))))
-    (render-state #P"article_list.html" (list :article-list article-list ))))
+  (let* ((article-list (article+article-observer--list--params (list-articles)))
+         (sort-by-updatedat
+           (sort article-list #'(lambda (a1 a2) (> (getf a1 :updated-at) (getf a2 :updated-at))))))
+    (render-state #P"article_list.html"
+                  (list :article-list sort-by-updatedat))))
+
+
+(defun parse-string-or-nil--to--num (symbol)
+  (if (null symbol) 0
+      (let ((maybe-integer (parse-integer symbol :junk-allowed t)))
+        (if maybe-integer maybe-integer 0))))
 
 
 

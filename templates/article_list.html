@@ -14,7 +14,7 @@
     {% for article in article-list %}
     <tr>
       <td> <a href="{{article.cosmic-link}}"> {{ article.title }} </a> </td>
-      <td> {{ article.updated-at }} </td>
+      <td> {{ article.updated-at-as-text }} </td>
       <td> <a href="/observer/{{article.observer.cosmic-link}}"> {{ article.observer.name }} </a> </td>
       <td> {{ article.tags }} </td>
     </tr>

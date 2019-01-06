@@ -20,6 +20,7 @@
            :list-articles
            :cosmic_link-article
            :maybe-add-article-row-to-db
+           :universal-time-to-time-text
            :write-file-to-uploader
            :read-file-from-uploader
            :file_name-condition))
@@ -103,14 +104,15 @@
 
 ;;;; article
 
-(defparameter *num-show-list-articles* 10)
 (defun list-articles ()
   (with-connection (db)
     (retrieve-all
      (select :*
-       (from :article)
-       (limit *num-show-list-articles*)
-       ))))
+       (from :article)))))
+
+;; (defparameter *num-show-list-articles* 10)
+;; (limit *num-show-list-articles*)
+;; (offset (* current-page *num-show-list-articles*))
 
 (defun cosmic_link-article (cosmic_link)
   (with-connection (db)
@@ -170,16 +172,15 @@
            )))
 
 
-#|
+
 (defun universal-time-to-time-text (universal-time)
   (multiple-value-bind (second minute hour date mouth year)
       (decode-universal-time universal-time)
-    (format nil "~A/~A/~A ~A:~A:~A" year mouth date hour minute second)
+    (format nil "~A-~A-~A ~A:~A:~A" year mouth date hour minute second)
   ))
 
-(print
- (universal-time-to-time-text 10000))
-|#
+;;(print (universal-time-to-time-text 10000))
+
 
 ;;;; file uploader
 
