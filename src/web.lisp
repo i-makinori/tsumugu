@@ -29,8 +29,6 @@
   (let ((observer (num_enum-to-observer-proclaimed (gethash :observer-num_enuem *session*))))
     (render template-path `(:observer ,observer ,@env))))
 
-;;(print (num_enum-to-observer-proclaimed 100))
-
 
 (defun render-blob-page (title contents)
   (render-state
@@ -105,7 +103,6 @@
 
 
 (defroute ("/observer/edit-article" :method :GET) ()
-  ;; (format nil "environment have been forgot how to listen articles.")
   (render-state #P"editor.html" (list))
   )
 

@@ -39,16 +39,7 @@
   (with-connection (db)
     (retrieve-one
      (select :*
-       (from :observer))))
-  )
-
-(print
-   (with-connection (db)
-    (retrieve-all
-     (select :*
-       (from :observer)
-       (where (:= :cosmic-link "the-atmos"))
-       ))))
+       (from :observer)))))
 
 
 (defun cookie-logd-in (session observer-num_enuem)
@@ -80,9 +71,6 @@
                (:= :password maybe-password)
                (:= :cosmic_link maybe-cosmic-link)))))))
 
-;; (print (getf (is-trury-the-observer "neko_neko_chaos" "dolphins") :num-enuem))
-;; (print (is-trury-the-observer "the-atmos" "atoms_password"))
-;; select * from observer where password = "dolphins" and cosmic_link = "neko_neko_chaos";
 
 (defun let-loged-in-cookie (session observer-num_enuem)
   (setf (gethash :observer-num_enuem session) observer-num_enuem)
@@ -97,19 +85,7 @@
         
 
 
-
-
-
 (defstruct article )
-
-
-
-#|
-(defun user-hash->user-struct (user-hash) ;; future name error
-  "(article-hash::list||hash) -> Maybe (article::struct)"
-  user-hash)
-|#
-
 
 
 ;;;; observer
@@ -145,14 +121,6 @@
        ))))
 
 
-
-
-;; (apply #'datafly:connect-toplevel (connection-settings :maindb))
-#|
-(defun articles* ()
-  (datafly:retrieve-one
-   (sxql:select :* (sxql:from :articles))))
-|#
 
 (defun safe-id-name-p (id-name)
   ;; _-0-9a-zA-Z
@@ -202,32 +170,6 @@
            )))
 
 
-#|
-(print (num_enum-to-observer-proclaimed 1))
-
-(with-connection (db)
-  (execute
-   (insert-into :article
-     (set= :num_enuem 10
-           :cosmic_link "the_cosmic2"
-           :observer_id 11
-           :authorities ""
-           :updated_at 100
-           :title "title"
-           :tags "tag1 tag2"
-           :contents "# content
-content"))))
-
-(defun hoge (n)
-  (handler-case
-      (print (/ 1 n))
-    (t (c)
-      (values nil :server-error c))))
-
-(print (hoge 10))
-(print (list-articles))
-
-|#
 #|
 (defun universal-time-to-time-text (universal-time)
   (multiple-value-bind (second minute hour date mouth year)

@@ -59,29 +59,3 @@
 (defun db-contents ()
   (mapcar #'file-namestring
           (uiop:directory-files *files-db-directory*)))
-
-#| 
-
-;; lack.builder macro's list's :stacic key generates route of unix file GETtings.
-(defun read-contents-vector--from--db-directory (filename)
-  ;; future : (filename procedure)
-  ;; prorecure :: (\stream -> read-procedure)
-  ;; return maybe(values contents-vector [maybe-contents-types])
-  (let ((file-path (merge-pathnames (format nil "~A" filename)
-                                    *files-db-directory*)))
-    (with-open-file (read-stream file-path
-                                 :direction :input
-                                 :element-type '(unsigned-byte 8)
-                                 :if-does-not-exist nil)
-      (unless read-stream
-        nil)
-      (when read-stream
-        (let* ((buf (make-array (file-length read-stream) :element-type '(unsigned-byte 8)))
-               (file-type (pathname-type file-path))
-               (file-length (file-length read-stream)))
-          (read-sequence buf read-stream)
-          (values buf file-type file-length))))))
-
-|#
-
-
